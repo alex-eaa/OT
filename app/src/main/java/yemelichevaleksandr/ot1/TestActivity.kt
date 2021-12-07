@@ -7,13 +7,17 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import moxy.MvpAppCompatActivity
+import moxy.ktx.moxyPresenter
+import moxy.presenter.InjectPresenter
 import yemelichevaleksandr.ot1.TestModel.Companion.NUMBER_QUESTIONS_IN_TEST
 import yemelichevaleksandr.ot1.databinding.SecondactivityBinding
 
-class TestActivity : AppCompatActivity(), TestActivityView {
+class TestActivity : MvpAppCompatActivity(), TestActivityView {
 
     private lateinit var binding: SecondactivityBinding
-    private val presenter = TestPresenter(this, this)
+
+    private val presenter by moxyPresenter { TestPresenter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

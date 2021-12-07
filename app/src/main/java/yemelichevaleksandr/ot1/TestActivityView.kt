@@ -1,6 +1,12 @@
 package yemelichevaleksandr.ot1
 
-interface TestActivityView {
+import moxy.MvpView
+import moxy.viewstate.strategy.*
+
+
+@StateStrategyType(SingleStateStrategy::class)
+interface TestActivityView : MvpView {
+    @StateStrategyType(OneExecutionStateStrategy::class)
     fun renderQuestion(question: Question)
     fun showDialogYes()
     fun showDialogNo(question: Question, answer: String)

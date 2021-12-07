@@ -1,9 +1,10 @@
 package yemelichevaleksandr.ot1
 
 import android.content.Context
+import moxy.MvpPresenter
 import yemelichevaleksandr.ot1.TestModel.Companion.NUMBER_QUESTIONS_IN_TEST
 
-class TestPresenter(private val view: TestActivityView, val context: Context) {
+class TestPresenter(private val context: Context) : MvpPresenter<TestActivityView>() {
     private val model = TestModel()
 
     private var numberCorrectAnswers = 0
@@ -19,22 +20,22 @@ class TestPresenter(private val view: TestActivityView, val context: Context) {
         numberCurrentAnswers++
         if (numberCurrentAnswers < NUMBER_QUESTIONS_IN_TEST) {
             renderQuestion(numberCurrentAnswers)
-        }else {
-            view.showResult(numberCorrectAnswers)
+        } else {
+            viewState.showResult(numberCorrectAnswers)
         }
     }
 
 
     private fun renderQuestion(number: Int) {
-        view.renderQuestion(questionArray[number])
+        viewState.renderQuestion(questionArray[number])
     }
 
     fun checkAnswer(answer: String) {
-        if (questionArray[numberCurrentAnswers].answersList[0] == answer){
+        if (questionArray[numberCurrentAnswers].answersList[0] == answer) {
             numberCorrectAnswers++
-            view.showDialogYes()
-        }else{
-            view.showDialogNo(questionArray[numberCurrentAnswers], answer)
+            viewState.showDialogYes()
+        } else {
+            viewState.showDialogNo(questionArray[numberCurrentAnswers], answer)
         }
     }
 
