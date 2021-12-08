@@ -17,11 +17,12 @@ class TestModel {
     private val array: ArrayList<Question> = ArrayList()
     private var rndQuestionNumbers = mutableSetOf<Int>()
 
-    fun getQuestions(context: Context): ArrayList<Question> {
+    private val context = App.getContext()
+
+    fun getQuestions(): ArrayList<Question> {
+
         val stringArray = context.resources.getStringArray(R.array.test)
         getRndQuestionNumbers(stringArray.size / NUMBER_QUESTIONS_ITEMS)
-
-//        generateArrayAll(stringArray, context)
 
         var numText = 1
         rndQuestionNumbers.forEach {

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import moxy.MvpAppCompatActivity
@@ -16,10 +17,11 @@ class TestActivity : MvpAppCompatActivity(), TestActivityView {
     private lateinit var binding: SecondactivityBinding
     private var alertDialog: AlertDialog? = null
 
-    private val presenter by moxyPresenter { TestPresenter(this) }
+    private val presenter by moxyPresenter { TestPresenter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("qqq", "onCreate")
 
         binding = SecondactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -134,6 +136,16 @@ class TestActivity : MvpAppCompatActivity(), TestActivityView {
 
     override fun hideDialog() {
         alertDialog?.dismiss()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("qqq", "onPause")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("qqq", "onDestroy ")
     }
 
 }

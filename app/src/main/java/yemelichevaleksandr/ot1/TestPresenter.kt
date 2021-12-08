@@ -4,7 +4,7 @@ import android.content.Context
 import moxy.MvpPresenter
 import yemelichevaleksandr.ot1.TestModel.Companion.NUMBER_QUESTIONS_IN_TEST
 
-class TestPresenter(private val context: Context) : MvpPresenter<TestActivityView>() {
+class TestPresenter() : MvpPresenter<TestActivityView>() {
     private val model = TestModel()
 
     private var numberCorrectAnswers = 0
@@ -12,7 +12,7 @@ class TestPresenter(private val context: Context) : MvpPresenter<TestActivityVie
     private var questionArray: ArrayList<Question> = ArrayList(NUMBER_QUESTIONS_IN_TEST)
 
     private fun getFirstQuestion() {
-        questionArray = model.getQuestions(context)
+        questionArray = model.getQuestions()
         renderQuestion(numberCurrentAnswers)
     }
 
