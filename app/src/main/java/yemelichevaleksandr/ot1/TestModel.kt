@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken
 class TestModel {
 
     companion object {
-        const val NUMBER_QUESTIONS_IN_TEST = 20
+        const val NUMBER_QUESTIONS_IN_TEST = 5
         const val NUMBER_QUESTIONS_ITEMS = 7
     }
 

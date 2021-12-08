@@ -11,7 +11,7 @@ class TestPresenter(private val context: Context) : MvpPresenter<TestActivityVie
     private var numberCurrentAnswers = 0
     private var questionArray: ArrayList<Question> = ArrayList(NUMBER_QUESTIONS_IN_TEST)
 
-    fun getFirstQuestion() {
+    private fun getFirstQuestion() {
         questionArray = model.getQuestions(context)
         renderQuestion(numberCurrentAnswers)
     }
@@ -19,12 +19,17 @@ class TestPresenter(private val context: Context) : MvpPresenter<TestActivityVie
     fun getNextQuestion() {
         numberCurrentAnswers++
         if (numberCurrentAnswers < NUMBER_QUESTIONS_IN_TEST) {
+            viewState.hideDialog()
             renderQuestion(numberCurrentAnswers)
         } else {
             viewState.showResult(numberCorrectAnswers)
         }
     }
 
+    override fun attachView(view: TestActivityView?) {
+        super.attachView(view)
+        getFirstQuestion()
+    }
 
     private fun renderQuestion(number: Int) {
         viewState.renderQuestion(questionArray[number])
@@ -37,6 +42,14 @@ class TestPresenter(private val context: Context) : MvpPresenter<TestActivityVie
         } else {
             viewState.showDialogNo(questionArray[numberCurrentAnswers], answer)
         }
+    }
+
+    fun dismissAlertDialog() {
+        viewState.hideDialog()
+    }
+
+    fun onBackPressed(){
+        viewState.showDialogStop()
     }
 
 }
