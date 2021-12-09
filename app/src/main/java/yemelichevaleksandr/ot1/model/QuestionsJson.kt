@@ -1,4 +1,4 @@
-package yemelichevaleksandr.ot1
+package yemelichevaleksandr.ot1.model
 
 class QuestionsJson {
     companion object {

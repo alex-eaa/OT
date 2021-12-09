@@ -1,9 +1,11 @@
-package yemelichevaleksandr.ot1
+package yemelichevaleksandr.ot1.model
 
 import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import yemelichevaleksandr.ot1.App
+import yemelichevaleksandr.ot1.R
 
 
 class TestModel {

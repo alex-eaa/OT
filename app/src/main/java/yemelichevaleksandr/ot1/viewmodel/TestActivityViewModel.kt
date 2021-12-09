@@ -1,8 +1,10 @@
-package yemelichevaleksandr.ot1
+package yemelichevaleksandr.ot1.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import yemelichevaleksandr.ot1.model.Question
+import yemelichevaleksandr.ot1.model.TestModel
 
 class TestActivityViewModel: ViewModel() {
 

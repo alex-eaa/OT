@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OT1">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".TestActivity"
+        <activity android:name=".ui.TestActivity"
             tools:ignore="LockedOrientationActivity"/>
 
     </application>

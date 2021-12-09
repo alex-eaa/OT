@@ -1,4 +1,6 @@
-package yemelichevaleksandr.ot1
+package yemelichevaleksandr.ot1.viewmodel
+
+import yemelichevaleksandr.ot1.model.Question
 
 sealed class AnswerState{
     data class No(val question: Question, val answer: String) : AnswerState()

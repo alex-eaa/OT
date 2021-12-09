@@ -1,4 +1,4 @@
-package yemelichevaleksandr.ot1
+package yemelichevaleksandr.ot1.ui
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -8,7 +8,11 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import yemelichevaleksandr.ot1.TestModel.Companion.NUMBER_QUESTIONS_IN_TEST
+import yemelichevaleksandr.ot1.viewmodel.AnswerState
+import yemelichevaleksandr.ot1.model.Question
+import yemelichevaleksandr.ot1.R
+import yemelichevaleksandr.ot1.viewmodel.TestActivityViewModel
+import yemelichevaleksandr.ot1.model.TestModel.Companion.NUMBER_QUESTIONS_IN_TEST
 import yemelichevaleksandr.ot1.databinding.SecondactivityBinding
 
 class TestActivity : AppCompatActivity() {

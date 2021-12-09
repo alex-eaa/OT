@@ -1,4 +1,4 @@
-package yemelichevaleksandr.ot1
+package yemelichevaleksandr.ot1.ui
 
 import android.content.Intent
 import android.os.Bundle
