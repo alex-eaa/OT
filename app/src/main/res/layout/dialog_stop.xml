@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -13,14 +12,13 @@
         android:background="@android:color/holo_blue_light" />
 
     <TextView
+        android:id="@+id/tvStop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvStop"
         android:gravity="center"
-        android:layout_centerHorizontal="true"
         android:text="@string/stop"
-        android:textSize="25sp"
-        android:textColor="@android:color/holo_blue_light"/>
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="25sp" />
 
 
 </LinearLayout>
