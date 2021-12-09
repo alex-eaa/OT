@@ -22,10 +22,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SecondActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
-
         <activity android:name=".TestActivity"
             tools:ignore="LockedOrientationActivity"/>
 

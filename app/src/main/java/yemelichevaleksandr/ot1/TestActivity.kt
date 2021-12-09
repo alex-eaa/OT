@@ -4,37 +4,52 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-import moxy.MvpAppCompatActivity
-import moxy.ktx.moxyPresenter
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import yemelichevaleksandr.ot1.TestModel.Companion.NUMBER_QUESTIONS_IN_TEST
 import yemelichevaleksandr.ot1.databinding.SecondactivityBinding
 
-class TestActivity : MvpAppCompatActivity(), TestActivityView {
+class TestActivity : AppCompatActivity() {
 
     private lateinit var binding: SecondactivityBinding
     private var alertDialog: AlertDialog? = null
 
-    private val presenter by moxyPresenter { TestPresenter() }
+    private val viewModel: TestActivityViewModel by lazy {
+        ViewModelProvider(this).get(TestActivityViewModel::class.java)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("qqq", "onCreate")
 
         binding = SecondactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bt1.setOnClickListener { if (it is Button) presenter.checkAnswer(it.text.toString()) }
-        binding.bt2.setOnClickListener { if (it is Button) presenter.checkAnswer(it.text.toString()) }
-        binding.bt3.setOnClickListener { if (it is Button) presenter.checkAnswer(it.text.toString()) }
-        binding.bt4.setOnClickListener { if (it is Button) presenter.checkAnswer(it.text.toString()) }
-        binding.bt5.setOnClickListener { if (it is Button) presenter.checkAnswer(it.text.toString()) }
+        binding.bt1.setOnClickListener { if (it is Button) viewModel.checkAnswer(it.text.toString()) }
+        binding.bt2.setOnClickListener { if (it is Button) viewModel.checkAnswer(it.text.toString()) }
+        binding.bt3.setOnClickListener { if (it is Button) viewModel.checkAnswer(it.text.toString()) }
+        binding.bt4.setOnClickListener { if (it is Button) viewModel.checkAnswer(it.text.toString()) }
+        binding.bt5.setOnClickListener { if (it is Button) viewModel.checkAnswer(it.text.toString()) }
 
+        viewModel.question.observe(this, { question ->
+            renderQuestion(question)
+        })
+
+        viewModel.answerState.observe(this, { answerState ->
+            when (answerState) {
+                is AnswerState.Yes -> showDialogYes()
+                is AnswerState.No -> showDialogNo(answerState.question, answerState.answer)
+                is AnswerState.Result -> showResult(answerState.numberCorrectAnswers)
+                is AnswerState.Stop -> showDialogStop()
+            }
+        })
+
+        viewModel.getFirstQuestion()
     }
 
-    override fun renderQuestion(question: Question) {
+    private fun renderQuestion(question: Question) {
         val arrayBtn = arrayListOf(
             binding.bt1,
             binding.bt2,
@@ -52,16 +67,18 @@ class TestActivity : MvpAppCompatActivity(), TestActivityView {
         arrayBtn[4].text = question.answersList[4]
     }
 
-    override fun showDialogYes() {
+    private fun showDialogYes() {
         alertDialog = AlertDialog.Builder(this)
             .setCancelable(false)
             .setTitle("ВЕРНО !")
             .setIcon(R.drawable.ic_baseline_check_circle_outline_24)
-            .setPositiveButton("Дальше") { _, _ -> presenter.getNextQuestion() }
+            .setPositiveButton("Дальше") { _, _ ->
+                viewModel.getNextQuestion()
+            }
             .show()
     }
 
-    override fun showDialogNo(question: Question, answer: String) {
+    private fun showDialogNo(question: Question, answer: String) {
         val inflater = this.layoutInflater
         val dialogView = inflater.inflate(R.layout.dialog_no, null)
         dialogView.findViewById<TextView>(R.id.tvNo2).text = answer
@@ -73,13 +90,15 @@ class TestActivity : MvpAppCompatActivity(), TestActivityView {
             .setCancelable(false)
             .setTitle("НЕ верно !")
             .setIcon(R.drawable.ic_baseline_cancel_24)
-            .setPositiveButton("Дальше") { _, _ -> presenter.getNextQuestion() }
+            .setPositiveButton("Дальше") { _, _ ->
+                viewModel.getNextQuestion()
+            }
             .create()
         alertDialog?.show()
     }
 
     @SuppressLint("SetTextI18n")
-    override fun showResult(numberCorrectAnswers: Int) {
+    private fun showResult(numberCorrectAnswers: Int) {
         val inflater = this.layoutInflater
         val dialogView = inflater.inflate(R.layout.dialog_result, null)
 
@@ -116,7 +135,7 @@ class TestActivity : MvpAppCompatActivity(), TestActivityView {
         alertDialog?.show()
     }
 
-    override fun showDialogStop() {
+    private fun showDialogStop() {
         val dialogView = this.layoutInflater.inflate(R.layout.dialog_stop, null)
 
         alertDialog = AlertDialog.Builder(this)
@@ -125,27 +144,12 @@ class TestActivity : MvpAppCompatActivity(), TestActivityView {
             .setTitle("СТОП !")
             .setIcon(R.drawable.ic_baseline_close_24)
             .setPositiveButton("ДА") { _, _ -> finish() }
-            .setNegativeButton("НЕТ") { _, _ -> presenter.dismissAlertDialog() }
+            .setNegativeButton("НЕТ") { _, _ -> }
             .create()
         alertDialog?.show()
     }
 
     override fun onBackPressed() {
-        presenter.onBackPressed()
+        viewModel.onBackStop()
     }
-
-    override fun hideDialog() {
-        alertDialog?.dismiss()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("qqq", "onPause")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("qqq", "onDestroy ")
-    }
-
 }
