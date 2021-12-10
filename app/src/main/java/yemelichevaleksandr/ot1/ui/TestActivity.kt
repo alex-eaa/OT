@@ -49,8 +49,6 @@ class TestActivity : AppCompatActivity() {
                 is AnswerState.Stop -> showDialogStop()
             }
         })
-
-        viewModel.getFirstQuestion()
     }
 
     private fun renderQuestion(question: Question) {

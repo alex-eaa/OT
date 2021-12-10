@@ -20,7 +20,7 @@ class TestActivityViewModel: ViewModel() {
     private val _answerState: MutableLiveData<AnswerState> = MutableLiveData()
     val answerState: LiveData<AnswerState> get() = _answerState
 
-    fun getFirstQuestion() {
+    init {
         questionArray = model.getQuestions()
         renderQuestion(numberCurrentAnswers)
     }
