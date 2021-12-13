@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModel
 import yemelichevaleksandr.ot1.model.Question
 import yemelichevaleksandr.ot1.model.TestModel
 
-class TestActivityViewModel: ViewModel() {
+class TestActivityViewModel : ViewModel() {
 
     private val model = TestModel()
 
     private var numberCorrectAnswers = 0
     private var numberCurrentAnswers = 0
-    private var questionArray: ArrayList<Question> = ArrayList(TestModel.NUMBER_QUESTIONS_IN_TEST)
+    private var questions: List<Question> = model.getQuestions()
 
     private val _question: MutableLiveData<Question> = MutableLiveData()
     val question: LiveData<Question> get() = _question
@@ -21,13 +21,12 @@ class TestActivityViewModel: ViewModel() {
     val answerState: LiveData<AnswerState> get() = _answerState
 
     init {
-        questionArray = model.getQuestions()
         renderQuestion(numberCurrentAnswers)
     }
 
     fun getNextQuestion() {
         numberCurrentAnswers++
-        if (numberCurrentAnswers < TestModel.NUMBER_QUESTIONS_IN_TEST) {
+        if (numberCurrentAnswers < questions.size) {
             renderQuestion(numberCurrentAnswers)
         } else {
             _answerState.value = AnswerState.Result(numberCorrectAnswers)
@@ -35,16 +34,16 @@ class TestActivityViewModel: ViewModel() {
     }
 
     fun checkAnswer(answer: String) {
-        if (questionArray[numberCurrentAnswers].answersList[0] == answer) {
+        if (questions[numberCurrentAnswers].answersList[0] == answer) {
             numberCorrectAnswers++
             _answerState.value = AnswerState.Yes
         } else {
-            _answerState.value = AnswerState.No(questionArray[numberCurrentAnswers], answer)
+            _answerState.value = AnswerState.No(questions[numberCurrentAnswers], answer)
         }
     }
 
     private fun renderQuestion(number: Int) {
-        _question.value = questionArray[number]
+        _question.value = questions[number]
     }
 
     fun onBackStop() {
