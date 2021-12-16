@@ -56,36 +56,6 @@ class TestActivity : AppCompatActivity() {
                 is AnswerState.Stop -> showDialogStop()
             }
         })
-
-        UpdateTests()
-
-//        val storage = FirebaseStorage.getInstance()
-//        val rootRef = storage.reference
-//        val myRef = rootRef.child("git.txt")
-//        myRef.getBytes(1024 * 1024)
-//            .addOnSuccessListener {
-//                val str: String = String(it, StandardCharsets.UTF_8)
-//                binding.bt5.text = str
-//            }
-//            .addOnFailureListener {
-//                println("addOnFailureListener")
-//            }
-
-
-//        var versionFile = 0
-//        val listAll = rootRef.listAll()
-//            .addOnSuccessListener {
-//                for (item in it.items) {
-//                    if (item.name.contains("git")) {
-//                        val getVersionFile = item.name.drop(4).dropLast(4).toInt()
-//                        if (getVersionFile > versionFile) versionFile = getVersionFile
-//                    }
-//                }
-//                println("getVersionFile ${versionFile}")
-//            }
-//            .addOnFailureListener {
-//                println("addOnFailureListener addOnFailureListener addOnFailureListener addOnFailureListener")
-//            }
     }
 
     private fun renderQuestion(question: Question) {

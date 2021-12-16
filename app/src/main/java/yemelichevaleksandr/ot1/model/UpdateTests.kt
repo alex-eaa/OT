@@ -4,10 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ListResult
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Observable.empty
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.plugins.RxJavaPlugins.onError
 import yemelichevaleksandr.ot1.App
 import java.nio.charset.StandardCharsets
 
@@ -17,7 +14,6 @@ class UpdateTests {
     private val rootRef = storage.reference
 
     private val sPref = App.getContext().getSharedPreferences("SETTINGS", Context.MODE_PRIVATE)
-    private val version = App.getContext().getSharedPreferences("VERSION", 0)
 
     init {
         getFile()
@@ -56,7 +52,11 @@ class UpdateTests {
             .map {
                 Log.d("qqq", it)
             }
-            .subscribe()
+            .subscribe({
+
+            },{
+                Log.d("qqq", it.message.toString())
+            })
     }
 
     private fun getFile(): Single<ListResult> = Single.create { emitter ->

@@ -2,8 +2,10 @@ package yemelichevaleksandr.ot1.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import yemelichevaleksandr.ot1.databinding.ActivityMainBinding
+import yemelichevaleksandr.ot1.model.UpdateTests
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,5 +21,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, TestActivity::class.java))
         }
 
+        UpdateTests()
     }
 }
