@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "172016386788",
+    "project_id": "ot-tests",
+    "storage_bucket": "ot-tests.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172016386788:android:3170e2003b0a9fb08da2f1",
+        "android_client_info": {
+          "package_name": "yemelichevaleksandr.ot1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "172016386788-ubdvkktmie6so9j7gctmi3bcklb703ja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0MnXXIPaGfdR7EKTly8kWgha7vEn8Ss0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "172016386788-ubdvkktmie6so9j7gctmi3bcklb703ja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

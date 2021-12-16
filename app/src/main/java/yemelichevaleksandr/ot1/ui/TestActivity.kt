@@ -4,16 +4,23 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import yemelichevaleksandr.ot1.viewmodel.AnswerState
 import yemelichevaleksandr.ot1.model.Question
 import yemelichevaleksandr.ot1.R
 import yemelichevaleksandr.ot1.viewmodel.TestActivityViewModel
 import yemelichevaleksandr.ot1.model.TestModel.Companion.NUMBER_QUESTIONS_IN_TEST
 import yemelichevaleksandr.ot1.databinding.SecondactivityBinding
+import yemelichevaleksandr.ot1.model.UpdateTests
+import java.nio.charset.StandardCharsets
 
 class TestActivity : AppCompatActivity() {
 
@@ -49,6 +56,36 @@ class TestActivity : AppCompatActivity() {
                 is AnswerState.Stop -> showDialogStop()
             }
         })
+
+        UpdateTests()
+
+//        val storage = FirebaseStorage.getInstance()
+//        val rootRef = storage.reference
+//        val myRef = rootRef.child("git.txt")
+//        myRef.getBytes(1024 * 1024)
+//            .addOnSuccessListener {
+//                val str: String = String(it, StandardCharsets.UTF_8)
+//                binding.bt5.text = str
+//            }
+//            .addOnFailureListener {
+//                println("addOnFailureListener")
+//            }
+
+
+//        var versionFile = 0
+//        val listAll = rootRef.listAll()
+//            .addOnSuccessListener {
+//                for (item in it.items) {
+//                    if (item.name.contains("git")) {
+//                        val getVersionFile = item.name.drop(4).dropLast(4).toInt()
+//                        if (getVersionFile > versionFile) versionFile = getVersionFile
+//                    }
+//                }
+//                println("getVersionFile ${versionFile}")
+//            }
+//            .addOnFailureListener {
+//                println("addOnFailureListener addOnFailureListener addOnFailureListener addOnFailureListener")
+//            }
     }
 
     private fun renderQuestion(question: Question) {

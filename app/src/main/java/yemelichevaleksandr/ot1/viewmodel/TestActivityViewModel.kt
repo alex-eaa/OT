@@ -1,8 +1,12 @@
 package yemelichevaleksandr.ot1.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.functions.BiFunction
+import io.reactivex.rxjava3.subjects.PublishSubject
 import yemelichevaleksandr.ot1.model.Question
 import yemelichevaleksandr.ot1.model.TestModel
 
@@ -11,8 +15,18 @@ class TestActivityViewModel : ViewModel() {
     private val model = TestModel()
 
     private var numberCorrectAnswers = 0
-    private var numberCurrentAnswers = 0
-    private var questions: List<Question> = model.getQuestions()
+    private var numberCurrentQuestion = 1
+    private lateinit var currentQuestion: Question
+
+    private val questions: Observable<Question> = model.getQuestions()
+    private val numberQuestionSubject: PublishSubject<Int> = PublishSubject.create()
+
+    private val questionGenerate =
+        Observable.zip(questions, numberQuestionSubject, BiFunction { question, number ->
+            question.question = "$number. ${question.question}"
+            currentQuestion = question
+            return@BiFunction question
+        })
 
     private val _question: MutableLiveData<Question> = MutableLiveData()
     val question: LiveData<Question> get() = _question
@@ -21,29 +35,26 @@ class TestActivityViewModel : ViewModel() {
     val answerState: LiveData<AnswerState> get() = _answerState
 
     init {
-        renderQuestion(numberCurrentAnswers)
+        questionGenerate.subscribe({ _question.value = it }, {})
+        numberQuestionSubject.onNext(numberCurrentQuestion)
     }
 
     fun getNextQuestion() {
-        numberCurrentAnswers++
-        if (numberCurrentAnswers < questions.size) {
-            renderQuestion(numberCurrentAnswers)
+        if (numberCurrentQuestion < TestModel.NUMBER_QUESTIONS_IN_TEST) {
+            numberCurrentQuestion++
+            numberQuestionSubject.onNext(numberCurrentQuestion)
         } else {
             _answerState.value = AnswerState.Result(numberCorrectAnswers)
         }
     }
 
     fun checkAnswer(answer: String) {
-        if (questions[numberCurrentAnswers].answersList[0] == answer) {
+        if (currentQuestion.answersList[0] == answer) {
             numberCorrectAnswers++
             _answerState.value = AnswerState.Yes
         } else {
-            _answerState.value = AnswerState.No(questions[numberCurrentAnswers], answer)
+            _answerState.value = AnswerState.No(currentQuestion, answer)
         }
-    }
-
-    private fun renderQuestion(number: Int) {
-        _question.value = questions[number]
     }
 
     fun onBackStop() {
