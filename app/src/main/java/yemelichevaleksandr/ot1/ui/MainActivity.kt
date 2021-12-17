@@ -2,10 +2,9 @@ package yemelichevaleksandr.ot1.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import yemelichevaleksandr.ot1.databinding.ActivityMainBinding
-import yemelichevaleksandr.ot1.model.UpdateTests
+import yemelichevaleksandr.ot1.model.update.UpdateTests
 
 class MainActivity : AppCompatActivity() {
 

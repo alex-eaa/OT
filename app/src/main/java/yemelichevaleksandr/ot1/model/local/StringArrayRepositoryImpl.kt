@@ -1,24 +1,19 @@
-package yemelichevaleksandr.ot1.model
+package yemelichevaleksandr.ot1.model.local
 
-import android.content.Context
-import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import io.reactivex.rxjava3.core.Observable
 import yemelichevaleksandr.ot1.App
 import yemelichevaleksandr.ot1.R
-import java.util.*
+import yemelichevaleksandr.ot1.model.Question
 import kotlin.collections.ArrayList
 
 
-class TestModel {
+class StringArrayRepositoryImpl : LocalRepository {
 
     companion object {
-        const val NUMBER_QUESTIONS_IN_TEST = 5
         const val NUMBER_QUESTIONS_ITEMS = 7
     }
 
-    fun getQuestions(): Observable<Question> = Observable.fromIterable(getArrayStrings())
+    override fun getRndQuestions(number: Int): Observable<Question> = Observable.fromIterable(getArrayStrings())
         .buffer(NUMBER_QUESTIONS_ITEMS)
         .map {
             Question(
@@ -29,12 +24,14 @@ class TestModel {
         }
         .toList()
         .flatMapObservable { Observable.fromIterable(it.shuffled()) }
-        .take(NUMBER_QUESTIONS_IN_TEST.toLong())
+        .take(number.toLong())
         .toList()
         .flatMapObservable { Observable.fromIterable(it) }
 
+    override fun saveAllQuestions(list: ArrayList<Question>) {
+        //TODO("Not yet implemented")
+    }
 
     private fun getArrayStrings(): ArrayList<String> =
         App.getContext().resources.getStringArray(R.array.test).toList() as ArrayList<String>
-
 }

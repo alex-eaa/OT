@@ -1,4 +1,4 @@
-package yemelichevaleksandr.ot1.model
+package yemelichevaleksandr.ot1.model.update
 
 import android.content.Context
 import android.util.Log

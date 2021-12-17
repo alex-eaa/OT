@@ -9,18 +9,13 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
 import yemelichevaleksandr.ot1.viewmodel.AnswerState
 import yemelichevaleksandr.ot1.model.Question
 import yemelichevaleksandr.ot1.R
 import yemelichevaleksandr.ot1.viewmodel.TestActivityViewModel
-import yemelichevaleksandr.ot1.model.TestModel.Companion.NUMBER_QUESTIONS_IN_TEST
 import yemelichevaleksandr.ot1.databinding.SecondactivityBinding
-import yemelichevaleksandr.ot1.model.UpdateTests
-import java.nio.charset.StandardCharsets
+import yemelichevaleksandr.ot1.viewmodel.TestActivityViewModel.Companion.NUMBER_QUESTIONS_IN_TEST
+
 
 class TestActivity : AppCompatActivity() {
 

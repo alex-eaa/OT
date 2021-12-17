@@ -1,24 +1,26 @@
 package yemelichevaleksandr.ot1.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.subjects.PublishSubject
+import yemelichevaleksandr.ot1.model.local.LocalRepositoryFactory
 import yemelichevaleksandr.ot1.model.Question
-import yemelichevaleksandr.ot1.model.TestModel
 
 class TestActivityViewModel : ViewModel() {
+    companion object{
+        const val NUMBER_QUESTIONS_IN_TEST = 5
+    }
 
-    private val model = TestModel()
+    private val model = LocalRepositoryFactory.create()
 
     private var numberCorrectAnswers = 0
     private var numberCurrentQuestion = 1
     private lateinit var currentQuestion: Question
 
-    private val questions: Observable<Question> = model.getQuestions()
+    private val questions: Observable<Question> = model.getRndQuestions(NUMBER_QUESTIONS_IN_TEST)
     private val numberQuestionSubject: PublishSubject<Int> = PublishSubject.create()
 
     private val questionGenerate =
@@ -40,7 +42,7 @@ class TestActivityViewModel : ViewModel() {
     }
 
     fun getNextQuestion() {
-        if (numberCurrentQuestion < TestModel.NUMBER_QUESTIONS_IN_TEST) {
+        if (numberCurrentQuestion < NUMBER_QUESTIONS_IN_TEST) {
             numberCurrentQuestion++
             numberQuestionSubject.onNext(numberCurrentQuestion)
         } else {
