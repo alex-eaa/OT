@@ -4,9 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import yemelichevaleksandr.ot1.databinding.ActivityMainBinding
 import yemelichevaleksandr.ot1.model.update.UpdateRepository
 import yemelichevaleksandr.ot1.model.update.UpdateRepositoryFactory
+import yemelichevaleksandr.ot1.model.update.UpdateRepositoryImpl
 import yemelichevaleksandr.ot1.model.update.UpdateTests
 
 class MainActivity : AppCompatActivity() {
@@ -29,11 +32,23 @@ class MainActivity : AppCompatActivity() {
         startUpdate()
     }
 
-    fun startUpdate(){
-        update.getLatestVersionNumber().subscribe({
-            Log.d("qqq", it.toString())
-        },{
-            Log.d("qqq", it.message.toString())
-        })
+    private fun startUpdate() {
+        update.getLatestVersionNumber()
+            .flatMap {
+                Log.d("qqq", "Start download")
+                update.downloadData(it)
+            }
+            .flatMap {
+                Log.d("qqq", "Start parsing")
+                update.parsingData(it)
+            }
+            .flatMapObservable{
+                Observable.fromIterable(it)
+            }
+            .subscribe({
+                Log.d("qqq", "subscribe = ${it.question}")
+            }, {
+                Log.d("qqq", it.message.toString())
+            })
     }
 }

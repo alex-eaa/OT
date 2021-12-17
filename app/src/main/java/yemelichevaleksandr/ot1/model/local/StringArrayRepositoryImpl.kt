@@ -33,5 +33,5 @@ class StringArrayRepositoryImpl : LocalRepository {
     }
 
     private fun getArrayStrings(): ArrayList<String> =
-        App.getContext().resources.getStringArray(R.array.test).toList() as ArrayList<String>
+        App.getContext()?.resources?.getStringArray(R.array.test)?.toList() as ArrayList<String>
 }

@@ -1,6 +1,7 @@
 package yemelichevaleksandr.ot1.model.update
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ListResult
@@ -13,7 +14,7 @@ class UpdateTests {
     private val storage = FirebaseStorage.getInstance()
     private val rootRef = storage.reference
 
-    private val sPref = App.getContext().getSharedPreferences("SETTINGS", Context.MODE_PRIVATE)
+    private val sPref : SharedPreferences? = App.getContext()?.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE)
 
     init {
         getFile()
@@ -28,12 +29,15 @@ class UpdateTests {
                 return@map versionFile
             }
             .map { fileVersion ->
-                val currentVersion = sPref.getInt("VERSION", 0)
-                if (fileVersion <= currentVersion) {
-                    throw Exception("Нет новых данных")
-                } else {
-                    return@map fileVersion
+                sPref?.getInt("VERSION", 0)?.let {
+                    val currentVersion = it
+                    if (fileVersion <= currentVersion) {
+                        throw Exception("Нет новых данных")
+                    } else {
+                        return@map fileVersion
+                    }
                 }
+                return@map 0
             }
             .flatMap { fileVersion ->
                 Single.create<String> { emitter ->
@@ -41,7 +45,7 @@ class UpdateTests {
                     myRef.getBytes(1024 * 1024)
                         .addOnSuccessListener {
                             val receivedFile = String(it, StandardCharsets.UTF_8)
-                            sPref.edit().putInt("VERSION", fileVersion).apply()
+                            sPref?.edit()?.putInt("VERSION", fileVersion)?.apply()
                             emitter.onSuccess(receivedFile)
                         }
                         .addOnFailureListener {
@@ -54,7 +58,7 @@ class UpdateTests {
             }
             .subscribe({
 
-            },{
+            }, {
                 Log.d("qqq", it.message.toString())
             })
     }
