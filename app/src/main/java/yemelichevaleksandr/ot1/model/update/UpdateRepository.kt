@@ -1,9 +1,10 @@
 package yemelichevaleksandr.ot1.model.update
 
+import io.reactivex.rxjava3.core.Single
 import yemelichevaleksandr.ot1.model.Question
 
 interface UpdateRepository {
-    fun getVersionInRepository(): Int
-    fun downloadData(version: Int): String
-    fun parsingData(data: String): ArrayList<Question>
+    fun getLatestVersionNumber(): Single<Int>
+    fun downloadData(version: Int): Single<String>
+    fun parsingData(data: String): Single<ArrayList<Question>>
 }
