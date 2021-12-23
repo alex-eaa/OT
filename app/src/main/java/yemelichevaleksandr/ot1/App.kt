@@ -6,6 +6,7 @@ import androidx.room.Room
 import yemelichevaleksandr.ot1.model.local.room.QuestionDao
 import yemelichevaleksandr.ot1.model.local.room.QuestionDataBase
 
+
 class App : Application() {
 
     override fun onCreate() {

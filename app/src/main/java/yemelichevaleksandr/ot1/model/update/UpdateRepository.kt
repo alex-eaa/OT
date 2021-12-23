@@ -6,6 +6,5 @@ import yemelichevaleksandr.ot1.model.Question
 
 interface UpdateRepository {
     fun getLatestVersionNumber(): Single<Int>
-    fun downloadData(version: Int): Single<String>
-    fun parsingData(data: String): Single<List<Question>>
+    fun downloadNewQuestions(version: Int): Single<List<Question>>
 }

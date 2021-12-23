@@ -12,9 +12,17 @@ interface QuestionDao {
     @Query("SELECT * FROM QuestionEntity")
     fun getAllQuestions(): Flowable<QuestionEntity>
 
+
+    @Transaction
+    fun updateAll(entity: List<QuestionEntity>) {
+        deleteAll()
+        insertAll(entity)
+    }
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(entity: List<QuestionEntity>)
 
     @Query("DELETE FROM QuestionEntity")
     fun deleteAll()
+
 }

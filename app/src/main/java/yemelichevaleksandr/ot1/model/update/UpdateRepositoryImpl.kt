@@ -25,15 +25,22 @@ class UpdateRepositoryImpl : UpdateRepository {
                     if (getVersionFile > version) version = getVersionFile
                 }
             }
-            Log.d("qqq", "Latest Number = $version")
             return@map version
         }
 
-    override fun downloadData(version: Int): Single<String> = Single.create { emitter ->
+
+    override fun downloadNewQuestions(version: Int): Single<List<Question>> {
+        return downloadFile(version)
+            .flatMap {
+                parsingData(it)
+            }
+    }
+
+
+    private fun downloadFile(version: Int): Single<String> = Single.create { emitter ->
         val myRef = rootRef.child("tst_$version.xml")
         myRef.getBytes(1024 * 1024)
             .addOnSuccessListener {
-                Log.d("qqq", "Загрузка завершена")
                 val receivedFile = String(it, StandardCharsets.UTF_8)
                 emitter.onSuccess(receivedFile)
             }
@@ -42,16 +49,15 @@ class UpdateRepositoryImpl : UpdateRepository {
             }
     }
 
-    override fun parsingData(data: String): Single<List<Question>> {
+    private fun parsingData(data: String): Single<List<Question>> {
         return getNewTestLines(data)
-            .skip(10)
+            .skip(NUMBER_QUESTIONS_ITEMS.toLong())
             .buffer(NUMBER_QUESTIONS_ITEMS)
             .map {
-                Log.d("qqq", "flatMapObservable map")
                 Question(
-                    question = it[0],
-                    info = it[1],
-                    answersList = arrayListOf(it[2], it[3], it[4], it[5], it[6])
+                    question = it[1],
+                    info = it[2],
+                    answersList = arrayListOf(it[3], it[4], it[5], it[6], it[7])
                 )
             }
             .toList()
@@ -69,19 +75,21 @@ class UpdateRepositoryImpl : UpdateRepository {
 
     private fun getNewTestLines(data: String): Observable<String> {
         return Observable.create { emitter ->
-            Regex(PATTERN_QUESTION_BLOCK).findAll(data).forEach { block ->
-                Regex(PATTERN_QUESTION_ITEMS).findAll(block.groupValues[0]).forEach {
-                    emitter.onNext(it.groupValues[1])
+            Regex(PATTERN_QUESTION_BLOCK).findAll(data)
+                .map { Regex(PATTERN_QUESTION_ITEMS).findAll(it.groupValues[0]) }
+                .forEach {
+                    it.forEach {
+                        emitter.onNext(it.groupValues[2])
+                    }
                 }
-            }
             emitter.onComplete()
         }
     }
 
     companion object {
-        const val NUMBER_QUESTIONS_ITEMS = 7
+        const val NUMBER_QUESTIONS_ITEMS = 9
         const val PATTERN_QUESTION_BLOCK = "<Row[\\d\\D]+?</Row>"
         const val PATTERN_QUESTION_ITEMS =
-            "<Cell ss:StyleID=\".+\"><Data ss:Type=\"String\">([\\d\\D]+?)</Data>[\\d\\D]+?</Cell>"
+            "<Cell ss:StyleID=\".+\"><Data ss:Type=\"(String|Number)\">(.+?)</Data>"
     }
 }
