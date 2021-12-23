@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.subjects.PublishSubject
-import yemelichevaleksandr.ot1.model.local.LocalRepositoryFactory
 import yemelichevaleksandr.ot1.model.Question
+import yemelichevaleksandr.ot1.model.local.LocalRepositoryFactory
 
 class TestActivityViewModel : ViewModel() {
     companion object{

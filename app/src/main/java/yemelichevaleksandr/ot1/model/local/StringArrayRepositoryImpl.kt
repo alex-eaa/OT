@@ -4,7 +4,6 @@ import io.reactivex.rxjava3.core.Observable
 import yemelichevaleksandr.ot1.App
 import yemelichevaleksandr.ot1.R
 import yemelichevaleksandr.ot1.model.Question
-import kotlin.collections.ArrayList
 
 
 class StringArrayRepositoryImpl : LocalRepository {

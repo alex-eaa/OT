@@ -16,6 +16,9 @@ class App : Application() {
 
     companion object {
         private var appInstance: App? = null
+
+        val settings: Settings by lazy { Settings(getContext()!!) }
+
         private var db: QuestionDataBase? = null
         private const val DB_NAME = "Question.db"
 

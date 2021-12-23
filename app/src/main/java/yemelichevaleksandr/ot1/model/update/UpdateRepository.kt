@@ -1,6 +1,5 @@
 package yemelichevaleksandr.ot1.model.update
 
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import yemelichevaleksandr.ot1.model.Question
 

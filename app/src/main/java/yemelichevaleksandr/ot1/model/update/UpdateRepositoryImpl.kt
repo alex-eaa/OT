@@ -1,15 +1,12 @@
 package yemelichevaleksandr.ot1.model.update
 
-import android.util.Log
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import yemelichevaleksandr.ot1.model.Question
-import yemelichevaleksandr.ot1.model.local.StringArrayRepositoryImpl
 import java.nio.charset.StandardCharsets
 import java.util.*
-import kotlin.collections.ArrayList
 
 class UpdateRepositoryImpl : UpdateRepository {
 
