@@ -1,8 +1,10 @@
 package yemelichevaleksandr.ot1.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -10,15 +12,17 @@ import yemelichevaleksandr.ot1.model.Question
 import yemelichevaleksandr.ot1.model.local.LocalRepositoryFactory
 
 class TestActivityViewModel : ViewModel() {
-    companion object{
-        const val NUMBER_QUESTIONS_IN_TEST = 5
-    }
-
     private val model = LocalRepositoryFactory.create()
 
     private var numberCorrectAnswers = 0
     private var numberCurrentQuestion = 1
     private lateinit var currentQuestion: Question
+
+    private val _question: MutableLiveData<Question> = MutableLiveData()
+    val question: LiveData<Question> get() = _question
+
+    private val _answerState: MutableLiveData<AnswerState> = MutableLiveData()
+    val answerState: LiveData<AnswerState> get() = _answerState
 
     private val questions: Observable<Question> = model.getRndQuestions(NUMBER_QUESTIONS_IN_TEST)
     private val numberQuestionSubject: PublishSubject<Int> = PublishSubject.create()
@@ -29,15 +33,15 @@ class TestActivityViewModel : ViewModel() {
             currentQuestion = question
             return@BiFunction question
         })
-
-    private val _question: MutableLiveData<Question> = MutableLiveData()
-    val question: LiveData<Question> get() = _question
-
-    private val _answerState: MutableLiveData<AnswerState> = MutableLiveData()
-    val answerState: LiveData<AnswerState> get() = _answerState
+            .subscribe(
+                {
+                    _question.value = it
+                }, {
+                    Log.d("qqq", "error ${it.message}")
+                }
+            )
 
     init {
-        questionGenerate.subscribe({ _question.value = it }, {})
         numberQuestionSubject.onNext(numberCurrentQuestion)
     }
 
@@ -63,4 +67,7 @@ class TestActivityViewModel : ViewModel() {
         _answerState.value = AnswerState.Stop
     }
 
+    companion object {
+        const val NUMBER_QUESTIONS_IN_TEST = 20
+    }
 }

@@ -27,9 +27,10 @@ class StringArrayRepositoryImpl : LocalRepository {
         .toList()
         .flatMapObservable { Observable.fromIterable(it) }
 
-    override fun saveAllQuestions(list: ArrayList<Question>) {
-        //TODO("Not yet implemented")
+    override fun saveAllQuestions(list: List<Question>): Boolean {
+        return false
     }
+
 
     private fun getArrayStrings(): ArrayList<String> =
         App.getContext()?.resources?.getStringArray(R.array.test)?.toList() as ArrayList<String>

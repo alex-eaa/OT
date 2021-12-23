@@ -27,5 +27,5 @@ fun entityToQuestion(entity: QuestionEntity) = Question(
         entity.answer2,
         entity.answer3,
         entity.answer4,
-    ),
+    )
 )

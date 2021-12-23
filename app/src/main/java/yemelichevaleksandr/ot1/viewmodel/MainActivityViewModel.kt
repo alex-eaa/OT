@@ -6,11 +6,14 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import yemelichevaleksandr.ot1.App.Companion.getQuestionDao
 import yemelichevaleksandr.ot1.App.Companion.settings
+import yemelichevaleksandr.ot1.model.local.LocalRepositoryFactory
 import yemelichevaleksandr.ot1.model.local.room.listQuestionToEntity
 import yemelichevaleksandr.ot1.model.update.UpdateRepository
 import yemelichevaleksandr.ot1.model.update.UpdateRepositoryFactory
 
 class MainActivityViewModel : ViewModel() {
+
+    private val model = LocalRepositoryFactory.create()
 
     private val update: UpdateRepository by lazy {
         UpdateRepositoryFactory.create()
@@ -31,14 +34,16 @@ class MainActivityViewModel : ViewModel() {
             }
             .observeOn(Schedulers.io())
             .map {
-                val dbRes = getQuestionDao().updateAll(listQuestionToEntity(it))
-                if (dbRes) settings.version = newVersion
+                val dbRes = model.saveAllQuestions(it)
+                if (dbRes) {
+                    settings.version = newVersion
+                    settings.countQuestions = it.size
+                    Log.d(TAG, "Количество обновленных вопросов = ${it.size}")
+                }
                 it
             }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                Log.d(TAG, "Количество обновленных вопросов = ${it.size}")
-                settings.countQuestions = it.size
             }, {
                 Log.d(TAG, "ERROR: ${it.message.toString()}")
             })

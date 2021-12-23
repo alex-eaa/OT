@@ -1,16 +1,12 @@
 package yemelichevaleksandr.ot1.model.local.room
 
 import androidx.room.*
-import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface QuestionDao {
-    @Query("SELECT * FROM QuestionEntity WHERE id = :id")
-    fun getQuestion(id: Int): Single<QuestionEntity>
-
-    @Query("SELECT * FROM QuestionEntity")
-    fun getAllQuestions(): Flowable<QuestionEntity>
+    @Query("SELECT * FROM QuestionEntity ORDER BY RANDOM() LIMIT :limit")
+    fun getQuestions(limit: Int): Single<List<QuestionEntity>>
 
 
     @Transaction
@@ -25,5 +21,4 @@ interface QuestionDao {
 
     @Query("DELETE FROM QuestionEntity")
     fun deleteAll()
-
 }
