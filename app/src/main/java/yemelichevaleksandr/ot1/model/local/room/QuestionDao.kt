@@ -14,9 +14,10 @@ interface QuestionDao {
 
 
     @Transaction
-    fun updateAll(entity: List<QuestionEntity>) {
+    fun updateAll(entity: List<QuestionEntity>): Boolean {
         deleteAll()
         insertAll(entity)
+        return true
     }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
