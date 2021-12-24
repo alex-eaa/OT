@@ -14,29 +14,32 @@ class UpdateRepositoryImpl : UpdateRepository {
     private val storage = FirebaseStorage.getInstance()
     private val rootRef = storage.reference
 
-    override fun getLatestVersionNumber(): Single<Int> = getListAllFiles()
+    override fun getLatestVersionNumber(): Single<String> = getListAllFiles()
         .map {
             var version = 0
+            var fileNameMaxVersion = ""
             it.forEach { file ->
                 Regex(PATTERN_VERSION_FILE).find(file.name)?.let { fileName ->
-                    if (fileName.groupValues[1].toInt() > version)
+                    if (fileName.groupValues[1].toInt() > version) {
                         version = fileName.groupValues[1].toInt()
+                        fileNameMaxVersion = fileName.groupValues[0]
+                    }
                 }
             }
-            return@map version
+            return@map fileNameMaxVersion
         }
 
 
-    override fun downloadNewQuestions(version: Int): Single<List<Question>> {
-        return downloadFile(version)
+    override fun downloadNewQuestions(fileName: String): Single<List<Question>> {
+        return downloadFile(fileName)
             .flatMap {
                 parsingData(it)
             }
     }
 
 
-    private fun downloadFile(version: Int): Single<String> = Single.create { emitter ->
-        val myRef = rootRef.child("questions_v_$version.xml")
+    private fun downloadFile(fileName: String): Single<String> = Single.create { emitter ->
+        val myRef = rootRef.child(fileName)
         myRef.getBytes(1024 * 1024)
             .addOnSuccessListener {
                 val receivedFile = String(it, StandardCharsets.UTF_8)

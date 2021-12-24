@@ -22,15 +22,15 @@ class MainActivityViewModel : ViewModel() {
     fun update() {
         var newVersion = 0
         update.getLatestVersionNumber()
-            .map { versionInFB ->
-                Log.d(TAG, "Актуальная версия вопросов в облаке: $versionInFB")
-                if (versionInFB > settings.version || versionInFB <= settings.version) {
-                    newVersion = versionInFB
-                    versionInFB
+            .map { fileNmaeInFb ->
+                Log.d(TAG, "Новейший файл вопросов в облаке: $fileNmaeInFb")
+                    //TODO ("Получить имя файла из room")
+                if (compareVersionFilename(fileNmaeInFb, fileNmaeInRoom)) {
+                    fileNmaeInFb
                 } else error("Версия билетов актуальна")
             }
             .flatMap {
-                update.downloadNewQuestions(newVersion)
+                update.downloadNewQuestions(it)
             }
             .observeOn(Schedulers.io())
             .map {
@@ -47,6 +47,11 @@ class MainActivityViewModel : ViewModel() {
             }, {
                 Log.d(TAG, "ERROR: ${it.message.toString()}")
             })
+    }
+
+    fun compareVersionFilename(fileNameInFb: String, fileNameInRoom: String): Boolean {
+        //TODO("Сравнить версии файлов")
+        return true
     }
 
 
