@@ -1,5 +1,6 @@
 package yemelichevaleksandr.ot1.model.update
 
+import android.util.Log
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import io.reactivex.rxjava3.core.Observable
@@ -17,9 +18,9 @@ class UpdateRepositoryImpl : UpdateRepository {
         .map {
             var version = 0
             it.forEach { file ->
-                if (file.name.contains("tst")) {
-                    val getVersionFile = file.name.drop(4).dropLast(4).toInt()
-                    if (getVersionFile > version) version = getVersionFile
+                Regex(PATTERN_VERSION_FILE).find(file.name)?.let { fileName ->
+                    if (fileName.groupValues[1].toInt() > version)
+                        version = fileName.groupValues[1].toInt()
                 }
             }
             return@map version
@@ -35,7 +36,7 @@ class UpdateRepositoryImpl : UpdateRepository {
 
 
     private fun downloadFile(version: Int): Single<String> = Single.create { emitter ->
-        val myRef = rootRef.child("tst_$version.xml")
+        val myRef = rootRef.child("questions_v_$version.xml")
         myRef.getBytes(1024 * 1024)
             .addOnSuccessListener {
                 val receivedFile = String(it, StandardCharsets.UTF_8)
@@ -88,5 +89,6 @@ class UpdateRepositoryImpl : UpdateRepository {
         const val PATTERN_QUESTION_BLOCK = "<Row[\\d\\D]+?</Row>"
         const val PATTERN_QUESTION_ITEMS =
             "<Cell ss:StyleID=\".+\"><Data ss:Type=\"(String|Number)\">(.+?)</Data>"
+        const val PATTERN_VERSION_FILE = "questions_v_(\\d+).xml"
     }
 }

@@ -24,7 +24,7 @@ class MainActivityViewModel : ViewModel() {
         update.getLatestVersionNumber()
             .map { versionInFB ->
                 Log.d(TAG, "Актуальная версия вопросов в облаке: $versionInFB")
-                if (versionInFB > settings.version) {
+                if (versionInFB > settings.version || versionInFB <= settings.version) {
                     newVersion = versionInFB
                     versionInFB
                 } else error("Версия билетов актуальна")
