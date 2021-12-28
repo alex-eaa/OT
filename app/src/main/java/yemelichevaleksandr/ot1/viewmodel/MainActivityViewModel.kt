@@ -23,7 +23,6 @@ class MainActivityViewModel : ViewModel() {
     fun checkUpdateTime() {
         model.getSetting()
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 if (System.currentTimeMillis() - it.timeStamp > 86400000)
                     update(it.fileName)
@@ -31,32 +30,31 @@ class MainActivityViewModel : ViewModel() {
                     Log.d(TAG,
                         "До следующего обновления осталось: ${(86400000 - (System.currentTimeMillis() - it.timeStamp)) / 60000} минут")
             }, {
-                Log.d(TAG, "ERROR database: ${it.message.toString()}")
+                Log.d(TAG, "ERROR database setting: ${it.message.toString()}")
+                update(null)
             })
     }
 
 
-    private fun update(fileNameInRoom: String) {
+    private fun update(fileNameInRoom: String?) {
         var newFileName = ""
-        model.getSetting()
-            .doOnSuccess {
-                if (it == null ||  (it !=null && System.currentTimeMillis() - it.timeStamp > 86400000))
-                    update.getLatestVersionNumber()
-                else
-                    Log.d(TAG,
-                        "До следующего обновления осталось: ${(86400000 - (System.currentTimeMillis() - it.timeStamp)) / 60000} минут")
-
-            }
-            .doOnError {
-                update.getLatestVersionNumber()
-            }
-
+        update.getLatestVersionNumber()
+            .observeOn(Schedulers.io())
             .map { fileNameInFb ->
                 Log.d(TAG, "Новейший файл вопросов в облаке: $fileNameInFb")
                 Log.d(TAG, "Файл вопросов в базе: $fileNameInRoom")
-                if (update.isFileInFbNewer(fileNameInFb, fileNameInRoom)) {
-                    fileNameInFb
-                } else error("Версия билетов актуальна")
+
+                when {
+                    fileNameInRoom == null -> fileNameInFb
+                    update.isFileInFbNewer(fileNameInFb, fileNameInRoom) -> fileNameInFb
+                    else -> {
+                        model.insertSetting(SettingEntity(
+                            fileName = fileNameInRoom,
+                            timeStamp = System.currentTimeMillis())
+                        )
+                        error("Версия билетов в базе актуальна ")
+                    }
+                }
             }
             .flatMap {
                 newFileName = it
@@ -70,7 +68,6 @@ class MainActivityViewModel : ViewModel() {
                         fileName = newFileName,
                         timeStamp = System.currentTimeMillis())
                     )
-
                     Log.d(TAG, "Количество обновленных вопросов = ${it.size}")
                 }
                 it

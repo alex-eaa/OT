@@ -10,6 +10,6 @@ interface LocalRepository {
     fun getRndQuestions(number: Int): Observable<Question>
     fun saveAllQuestions(list: List<Question>) : Boolean
 
-    fun getSetting(): Maybe<SettingEntity>
+    fun getSetting(): Single<SettingEntity>
     fun insertSetting(entity: SettingEntity)
 }

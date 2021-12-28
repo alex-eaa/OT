@@ -26,9 +26,12 @@ class UpdateRepositoryImpl : UpdateRepository {
                     }
                 }
             }
-            return@map fileNameMaxVersion
-        }
 
+            if (fileNameMaxVersion.isEmpty())
+                error("Файлы с вопросами в FirebaseStorage не найдены")
+
+            fileNameMaxVersion
+        }
 
     override fun downloadNewQuestions(fileName: String): Single<List<Question>> {
         return downloadFile(fileName)
@@ -50,7 +53,6 @@ class UpdateRepositoryImpl : UpdateRepository {
 
         return verFileNameInFb > verFileNameInRoom
     }
-
 
     private fun downloadFile(fileName: String): Single<String> = Single.create { emitter ->
         val myRef = rootRef.child(fileName)

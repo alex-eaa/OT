@@ -34,7 +34,7 @@ class StringArrayRepositoryImpl : LocalRepository {
         return false
     }
 
-    override fun getSetting(): Maybe<SettingEntity> {
+    override fun getSetting(): Single<SettingEntity> {
         TODO("Not yet implemented")
     }
 

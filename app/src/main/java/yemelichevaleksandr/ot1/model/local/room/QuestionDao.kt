@@ -26,7 +26,7 @@ interface QuestionDao {
 
 
     @Query("SELECT * FROM SettingEntity WHERE id = 0")
-    fun getSetting(): Maybe<SettingEntity>
+    fun getSetting(): Single<SettingEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSetting(entity: SettingEntity)
