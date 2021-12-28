@@ -2,6 +2,7 @@ package yemelichevaleksandr.ot1.model.local
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import yemelichevaleksandr.ot1.App.Companion.getQuestionDao
 import yemelichevaleksandr.ot1.model.Question
@@ -27,7 +28,7 @@ class RoomRepositoryImpl : LocalRepository {
         return getQuestionDao().updateAll(listQuestionToEntity(list))
     }
 
-    override fun getSetting(): SettingEntity {
+    override fun getSetting(): Single<SettingEntity> {
         return getQuestionDao().getSetting()
     }
 

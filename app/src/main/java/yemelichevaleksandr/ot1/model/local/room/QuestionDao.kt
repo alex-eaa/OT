@@ -1,6 +1,7 @@
 package yemelichevaleksandr.ot1.model.local.room
 
 import androidx.room.*
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 
 @Dao
@@ -25,7 +26,7 @@ interface QuestionDao {
 
 
     @Query("SELECT * FROM SettingEntity WHERE id = 0")
-    fun getSetting(): SettingEntity
+    fun getSetting(): Maybe<SettingEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSetting(entity: SettingEntity)

@@ -20,12 +20,38 @@ class MainActivityViewModel : ViewModel() {
         UpdateRepositoryFactory.create()
     }
 
-    fun update() {
+    fun checkUpdateTime() {
+        model.getSetting()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                if (System.currentTimeMillis() - it.timeStamp > 86400000)
+                    update(it.fileName)
+                else
+                    Log.d(TAG,
+                        "До следующего обновления осталось: ${(86400000 - (System.currentTimeMillis() - it.timeStamp)) / 60000} минут")
+            }, {
+                Log.d(TAG, "ERROR database: ${it.message.toString()}")
+            })
+    }
+
+
+    private fun update(fileNameInRoom: String) {
         var newFileName = ""
-        update.getLatestVersionNumber()
-            .observeOn(Schedulers.io())
+        model.getSetting()
+            .doOnSuccess {
+                if (it == null ||  (it !=null && System.currentTimeMillis() - it.timeStamp > 86400000))
+                    update.getLatestVersionNumber()
+                else
+                    Log.d(TAG,
+                        "До следующего обновления осталось: ${(86400000 - (System.currentTimeMillis() - it.timeStamp)) / 60000} минут")
+
+            }
+            .doOnError {
+                update.getLatestVersionNumber()
+            }
+
             .map { fileNameInFb ->
-                val fileNameInRoom = model.getSetting().fileName
                 Log.d(TAG, "Новейший файл вопросов в облаке: $fileNameInFb")
                 Log.d(TAG, "Файл вопросов в базе: $fileNameInRoom")
                 if (update.isFileInFbNewer(fileNameInFb, fileNameInRoom)) {
@@ -42,7 +68,7 @@ class MainActivityViewModel : ViewModel() {
                 if (dbRes) {
                     model.insertSetting(SettingEntity(
                         fileName = newFileName,
-                        timeStamp = System.currentTimeMillis().toString())
+                        timeStamp = System.currentTimeMillis())
                     )
 
                     Log.d(TAG, "Количество обновленных вопросов = ${it.size}")

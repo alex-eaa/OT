@@ -1,6 +1,8 @@
 package yemelichevaleksandr.ot1.model.local
 
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import yemelichevaleksandr.ot1.App
 import yemelichevaleksandr.ot1.R
 import yemelichevaleksandr.ot1.model.Question
@@ -32,7 +34,7 @@ class StringArrayRepositoryImpl : LocalRepository {
         return false
     }
 
-    override fun getSetting(): SettingEntity {
+    override fun getSetting(): Maybe<SettingEntity> {
         TODO("Not yet implemented")
     }
 

@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class SettingEntity(
     @PrimaryKey
-    val id: Int = 0,
+    val id: Long = 0,
     val fileName: String,
-    val timeStamp: String
+    val timeStamp: Long
     )
