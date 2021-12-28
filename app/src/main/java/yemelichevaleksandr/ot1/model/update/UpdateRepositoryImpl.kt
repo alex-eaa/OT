@@ -37,6 +37,20 @@ class UpdateRepositoryImpl : UpdateRepository {
             }
     }
 
+    override fun isFileInFbNewer(fileNameInFb: String, fileNameInRoom: String): Boolean {
+        var verFileNameInFb = 0
+        Regex(PATTERN_VERSION_FILE).find(fileNameInFb)?.let {
+            verFileNameInFb = it.groupValues[1].toInt()
+        }
+
+        var verFileNameInRoom = 0
+        Regex(PATTERN_VERSION_FILE).find(fileNameInRoom)?.let {
+            verFileNameInRoom = it.groupValues[1].toInt()
+        }
+
+        return verFileNameInFb > verFileNameInRoom
+    }
+
 
     private fun downloadFile(fileName: String): Single<String> = Single.create { emitter ->
         val myRef = rootRef.child(fileName)

@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Observable
 import yemelichevaleksandr.ot1.App
 import yemelichevaleksandr.ot1.R
 import yemelichevaleksandr.ot1.model.Question
+import yemelichevaleksandr.ot1.model.local.room.SettingEntity
 
 
 class StringArrayRepositoryImpl : LocalRepository {
@@ -29,6 +30,14 @@ class StringArrayRepositoryImpl : LocalRepository {
 
     override fun saveAllQuestions(list: List<Question>): Boolean {
         return false
+    }
+
+    override fun getSetting(): SettingEntity {
+        TODO("Not yet implemented")
+    }
+
+    override fun insertSetting(entity: SettingEntity) {
+        TODO("Not yet implemented")
     }
 
 

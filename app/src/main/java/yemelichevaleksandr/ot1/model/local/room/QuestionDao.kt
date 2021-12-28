@@ -21,4 +21,12 @@ interface QuestionDao {
 
     @Query("DELETE FROM QuestionEntity")
     fun deleteAll()
+
+
+
+    @Query("SELECT * FROM SettingEntity WHERE id = 0")
+    fun getSetting(): SettingEntity
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertSetting(entity: SettingEntity)
 }

@@ -7,6 +7,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import yemelichevaleksandr.ot1.App.Companion.getQuestionDao
 import yemelichevaleksandr.ot1.App.Companion.settings
 import yemelichevaleksandr.ot1.model.local.LocalRepositoryFactory
+import yemelichevaleksandr.ot1.model.local.room.SettingEntity
 import yemelichevaleksandr.ot1.model.local.room.listQuestionToEntity
 import yemelichevaleksandr.ot1.model.update.UpdateRepository
 import yemelichevaleksandr.ot1.model.update.UpdateRepositoryFactory
@@ -20,24 +21,30 @@ class MainActivityViewModel : ViewModel() {
     }
 
     fun update() {
-        var newVersion = 0
+        var newFileName = ""
         update.getLatestVersionNumber()
-            .map { fileNmaeInFb ->
-                Log.d(TAG, "Новейший файл вопросов в облаке: $fileNmaeInFb")
-                    //TODO ("Получить имя файла из room")
-                if (compareVersionFilename(fileNmaeInFb, fileNmaeInRoom)) {
-                    fileNmaeInFb
+            .observeOn(Schedulers.io())
+            .map { fileNameInFb ->
+                val fileNameInRoom = model.getSetting().fileName
+                Log.d(TAG, "Новейший файл вопросов в облаке: $fileNameInFb")
+                Log.d(TAG, "Файл вопросов в базе: $fileNameInRoom")
+                if (update.isFileInFbNewer(fileNameInFb, fileNameInRoom)) {
+                    fileNameInFb
                 } else error("Версия билетов актуальна")
             }
             .flatMap {
+                newFileName = it
                 update.downloadNewQuestions(it)
             }
             .observeOn(Schedulers.io())
             .map {
                 val dbRes = model.saveAllQuestions(it)
                 if (dbRes) {
-                    settings.version = newVersion
-                    settings.countQuestions = it.size
+                    model.insertSetting(SettingEntity(
+                        fileName = newFileName,
+                        timeStamp = System.currentTimeMillis().toString())
+                    )
+
                     Log.d(TAG, "Количество обновленных вопросов = ${it.size}")
                 }
                 it
@@ -48,12 +55,6 @@ class MainActivityViewModel : ViewModel() {
                 Log.d(TAG, "ERROR: ${it.message.toString()}")
             })
     }
-
-    fun compareVersionFilename(fileNameInFb: String, fileNameInRoom: String): Boolean {
-        //TODO("Сравнить версии файлов")
-        return true
-    }
-
 
     companion object {
         const val TAG = "qqq"
