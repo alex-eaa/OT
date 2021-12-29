@@ -9,48 +9,34 @@ class UpdateRepositoryImpl : UpdateRepository {
 
     private val fileStorage = FileStorageFactory.create()
 
-    override fun getLatestVersionNumber(): Single<String> = fileStorage.getListAllFiles()
+    override fun getFilenameWithLatestQuestions(): Single<String> = fileStorage.getListAllFiles()
         .map {
             var version = 0
-            var fileNameMaxVersion = ""
+            var fileNameLatestVersion = ""
             it.forEach { file ->
                 Regex(PATTERN_VERSION_FILE).find(file.name)?.let { fileName ->
                     if (fileName.groupValues[1].toInt() > version) {
                         version = fileName.groupValues[1].toInt()
-                        fileNameMaxVersion = fileName.groupValues[0]
+                        fileNameLatestVersion = fileName.groupValues[0]
                     }
                 }
             }
 
-            if (fileNameMaxVersion.isEmpty())
+            if (fileNameLatestVersion.isEmpty())
                 error("Файлы с вопросами в FirebaseStorage не найдены")
 
-            fileNameMaxVersion
+            fileNameLatestVersion
         }
 
-    override fun downloadNewQuestions(fileName: String): Single<List<Question>> {
+    override fun getNewQuestions(fileName: String): Single<List<Question>> {
         return fileStorage.downloadFile(fileName)
             .flatMap {
-                parsingData(it)
+                parseIntoQuestions(it)
             }
     }
 
-    override fun isFileInFbNewer(fileNameInFb: String, fileNameInRoom: String): Boolean {
-        var verFileNameInFb = 0
-        Regex(PATTERN_VERSION_FILE).find(fileNameInFb)?.let {
-            verFileNameInFb = it.groupValues[1].toInt()
-        }
-
-        var verFileNameInRoom = 0
-        Regex(PATTERN_VERSION_FILE).find(fileNameInRoom)?.let {
-            verFileNameInRoom = it.groupValues[1].toInt()
-        }
-
-        return verFileNameInFb > verFileNameInRoom
-    }
-
-    private fun parsingData(data: String): Single<List<Question>> {
-        return getNewTestLines(data)
+    private fun parseIntoQuestions(data: String): Single<List<Question>> {
+        return parseIntoBlocksQuestions(data)
             .skip(NUMBER_QUESTIONS_ITEMS.toLong())
             .buffer(NUMBER_QUESTIONS_ITEMS)
             .map {
@@ -63,7 +49,7 @@ class UpdateRepositoryImpl : UpdateRepository {
             .toList()
     }
 
-    private fun getNewTestLines(data: String): Observable<String> {
+    private fun parseIntoBlocksQuestions(data: String): Observable<String> {
         return Observable.create { emitter ->
             Regex(PATTERN_QUESTION_BLOCK).findAll(data)
                 .map { Regex(PATTERN_QUESTION_ITEMS).findAll(it.groupValues[0]) }

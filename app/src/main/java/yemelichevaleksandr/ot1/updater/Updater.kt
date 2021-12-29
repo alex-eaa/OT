@@ -1,0 +1,92 @@
+package yemelichevaleksandr.ot1.updater
+
+import android.util.Log
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
+import yemelichevaleksandr.ot1.data.QuestionRepositoryFactory
+import yemelichevaleksandr.ot1.data.SettingsRepoFactory
+import yemelichevaleksandr.ot1.data.room.SettingEntity
+import yemelichevaleksandr.ot1.updater.UpdateRepositoryImpl.Companion.PATTERN_VERSION_FILE
+
+class Updater {
+
+    private val model = QuestionRepositoryFactory.create()
+    private val settingsRepo = SettingsRepoFactory.create()
+    private val update = UpdateRepositoryFactory.create()
+
+    fun checkUpdateTime() {
+        settingsRepo.getSetting()
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                if (System.currentTimeMillis() - it.timeStamp > 86400000)
+                    update(it.fileName)
+                else
+                    Log.d(TAG,
+                        "До следующего обновления осталось: ${(86400000 - (System.currentTimeMillis() - it.timeStamp)) / 60000} минут")
+            }, {
+                Log.d(TAG, "ERROR database setting: ${it.message.toString()}")
+                update(null)
+            })
+    }
+
+    private fun update(fileNameInRoom: String?) {
+        var newFileName = ""
+        update.getFilenameWithLatestQuestions()
+            .observeOn(Schedulers.io())
+            .map { fileNameInFb ->
+                Log.d(TAG, "Новейший файл вопросов в облаке: $fileNameInFb")
+                Log.d(TAG, "Файл вопросов в базе: $fileNameInRoom")
+
+                when {
+                    fileNameInRoom == null -> fileNameInFb
+                    isFileInFbNewer(fileNameInFb, fileNameInRoom) -> fileNameInFb
+                    else -> {
+                        settingsRepo.saveSetting(SettingEntity(
+                            fileName = fileNameInRoom,
+                            timeStamp = System.currentTimeMillis())
+                        )
+                        error("Версия билетов в базе актуальна ")
+                    }
+                }
+            }
+            .flatMap {
+                newFileName = it
+                update.getNewQuestions(it)
+            }
+            .observeOn(Schedulers.io())
+            .map {
+                val dbRes = model.saveAllQuestions(it)
+                if (dbRes) {
+                    settingsRepo.saveSetting(SettingEntity(
+                        fileName = newFileName,
+                        timeStamp = System.currentTimeMillis())
+                    )
+                    Log.d(TAG, "Количество обновленных вопросов = ${it.size}")
+                }
+                it
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+            }, {
+                Log.d(TAG, "ERROR: ${it.message.toString()}")
+            })
+    }
+
+    private fun isFileInFbNewer(fileNameInFb: String, fileNameInRoom: String): Boolean {
+        var verFileNameInFb = 0
+        Regex(PATTERN_VERSION_FILE).find(fileNameInFb)?.let {
+            verFileNameInFb = it.groupValues[1].toInt()
+        }
+
+        var verFileNameInRoom = 0
+        Regex(PATTERN_VERSION_FILE).find(fileNameInRoom)?.let {
+            verFileNameInRoom = it.groupValues[1].toInt()
+        }
+
+        return verFileNameInFb > verFileNameInRoom
+    }
+
+    companion object {
+        const val TAG = "qqq"
+    }
+}

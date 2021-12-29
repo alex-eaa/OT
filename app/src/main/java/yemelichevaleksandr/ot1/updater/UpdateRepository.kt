@@ -4,7 +4,6 @@ import io.reactivex.rxjava3.core.Single
 import yemelichevaleksandr.ot1.data.Question
 
 interface UpdateRepository {
-    fun getLatestVersionNumber(): Single<String>
-    fun downloadNewQuestions(fileName: String): Single<List<Question>>
-    fun isFileInFbNewer(fileNameInFb: String, fileNameInRoom: String): Boolean
+    fun getFilenameWithLatestQuestions(): Single<String>
+    fun getNewQuestions(fileName: String): Single<List<Question>>
 }

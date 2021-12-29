@@ -25,6 +25,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, TestActivity::class.java))
         }
 
-        viewModel.checkUpdateTime()
+        viewModel.checkUpdate()
     }
 }
