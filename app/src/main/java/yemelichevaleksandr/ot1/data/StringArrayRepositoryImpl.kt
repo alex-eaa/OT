@@ -1,10 +1,8 @@
 package yemelichevaleksandr.ot1.data
 
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import yemelichevaleksandr.ot1.App
 import yemelichevaleksandr.ot1.R
-import yemelichevaleksandr.ot1.data.room.SettingEntity
 
 
 class StringArrayRepositoryImpl : QuestionRepository {
