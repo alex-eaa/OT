@@ -4,24 +4,27 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
-import yemelichevaleksandr.ot1.App.Companion.getQuestionDao
-import yemelichevaleksandr.ot1.App.Companion.settings
-import yemelichevaleksandr.ot1.model.local.LocalRepositoryFactory
-import yemelichevaleksandr.ot1.model.local.room.SettingEntity
-import yemelichevaleksandr.ot1.model.local.room.listQuestionToEntity
-import yemelichevaleksandr.ot1.model.update.UpdateRepository
-import yemelichevaleksandr.ot1.model.update.UpdateRepositoryFactory
+import yemelichevaleksandr.ot1.data.QuestionRepositoryFactory
+import yemelichevaleksandr.ot1.data.SettingsRepo
+import yemelichevaleksandr.ot1.data.SettingsRepoFactory
+import yemelichevaleksandr.ot1.data.room.SettingEntity
+import yemelichevaleksandr.ot1.updater.UpdateRepository
+import yemelichevaleksandr.ot1.updater.UpdateRepositoryFactory
 
 class MainActivityViewModel : ViewModel() {
 
-    private val model = LocalRepositoryFactory.create()
+    private val model = QuestionRepositoryFactory.create()
 
     private val update: UpdateRepository by lazy {
         UpdateRepositoryFactory.create()
     }
 
+    private val settingsRepo: SettingsRepo by lazy {
+        SettingsRepoFactory.create()
+    }
+
     fun checkUpdateTime() {
-        model.getSetting()
+        settingsRepo.getSetting()
             .subscribeOn(Schedulers.io())
             .subscribe({
                 if (System.currentTimeMillis() - it.timeStamp > 86400000)
@@ -48,7 +51,7 @@ class MainActivityViewModel : ViewModel() {
                     fileNameInRoom == null -> fileNameInFb
                     update.isFileInFbNewer(fileNameInFb, fileNameInRoom) -> fileNameInFb
                     else -> {
-                        model.insertSetting(SettingEntity(
+                        settingsRepo.saveSetting(SettingEntity(
                             fileName = fileNameInRoom,
                             timeStamp = System.currentTimeMillis())
                         )
@@ -64,7 +67,7 @@ class MainActivityViewModel : ViewModel() {
             .map {
                 val dbRes = model.saveAllQuestions(it)
                 if (dbRes) {
-                    model.insertSetting(SettingEntity(
+                    settingsRepo.saveSetting(SettingEntity(
                         fileName = newFileName,
                         timeStamp = System.currentTimeMillis())
                     )

@@ -1,4 +1,4 @@
-package yemelichevaleksandr.ot1.model.local.fileStorage
+package yemelichevaleksandr.ot1.data.fileStorage
 
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference

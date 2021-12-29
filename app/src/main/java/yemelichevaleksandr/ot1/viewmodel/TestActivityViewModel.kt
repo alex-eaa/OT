@@ -4,15 +4,14 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.subjects.PublishSubject
-import yemelichevaleksandr.ot1.model.Question
-import yemelichevaleksandr.ot1.model.local.LocalRepositoryFactory
+import yemelichevaleksandr.ot1.data.Question
+import yemelichevaleksandr.ot1.data.QuestionRepositoryFactory
 
 class TestActivityViewModel : ViewModel() {
-    private val model = LocalRepositoryFactory.create()
+    private val model = QuestionRepositoryFactory.create()
 
     private var numberCorrectAnswers = 0
     private var numberCurrentQuestion = 1

@@ -3,8 +3,8 @@ package yemelichevaleksandr.ot1
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import yemelichevaleksandr.ot1.model.local.room.QuestionDao
-import yemelichevaleksandr.ot1.model.local.room.QuestionDataBase
+import yemelichevaleksandr.ot1.data.room.QuestionDao
+import yemelichevaleksandr.ot1.data.room.QuestionDataBase
 
 
 class App : Application() {

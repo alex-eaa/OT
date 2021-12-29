@@ -1,4 +1,4 @@
-package yemelichevaleksandr.ot1.model.local.room
+package yemelichevaleksandr.ot1.data.room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

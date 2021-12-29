@@ -1,7 +1,6 @@
-package yemelichevaleksandr.ot1.model.local.room
+package yemelichevaleksandr.ot1.data.room
 
 import androidx.room.*
-import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 
 @Dao

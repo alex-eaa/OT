@@ -1,14 +1,9 @@
-package yemelichevaleksandr.ot1.model.update
+package yemelichevaleksandr.ot1.updater
 
-import android.util.Log
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import yemelichevaleksandr.ot1.model.Question
-import yemelichevaleksandr.ot1.model.local.fileStorage.FileStorageFactory
-import java.nio.charset.StandardCharsets
-import java.util.*
+import yemelichevaleksandr.ot1.data.Question
+import yemelichevaleksandr.ot1.data.fileStorage.FileStorageFactory
 
 class UpdateRepositoryImpl : UpdateRepository {
 

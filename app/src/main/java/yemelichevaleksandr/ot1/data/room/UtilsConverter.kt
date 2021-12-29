@@ -1,6 +1,6 @@
-package yemelichevaleksandr.ot1.model.local.room
+package yemelichevaleksandr.ot1.data.room
 
-import yemelichevaleksandr.ot1.model.Question
+import yemelichevaleksandr.ot1.data.Question
 
 
 fun listQuestionToEntity(questions: List<Question>) =

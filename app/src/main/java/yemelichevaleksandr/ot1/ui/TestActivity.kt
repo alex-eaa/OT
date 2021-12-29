@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import yemelichevaleksandr.ot1.R
 import yemelichevaleksandr.ot1.databinding.SecondactivityBinding
-import yemelichevaleksandr.ot1.model.Question
+import yemelichevaleksandr.ot1.data.Question
 import yemelichevaleksandr.ot1.viewmodel.AnswerState
 import yemelichevaleksandr.ot1.viewmodel.TestActivityViewModel
 import yemelichevaleksandr.ot1.viewmodel.TestActivityViewModel.Companion.NUMBER_QUESTIONS_IN_TEST
