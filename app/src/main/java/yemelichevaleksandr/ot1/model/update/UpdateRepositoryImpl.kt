@@ -6,15 +6,15 @@ import com.google.firebase.storage.StorageReference
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import yemelichevaleksandr.ot1.model.Question
+import yemelichevaleksandr.ot1.model.local.fileStorage.FileStorageFactory
 import java.nio.charset.StandardCharsets
 import java.util.*
 
 class UpdateRepositoryImpl : UpdateRepository {
 
-    private val storage = FirebaseStorage.getInstance()
-    private val rootRef = storage.reference
+    private val fileStorage = FileStorageFactory.create()
 
-    override fun getLatestVersionNumber(): Single<String> = getListAllFiles()
+    override fun getLatestVersionNumber(): Single<String> = fileStorage.getListAllFiles()
         .map {
             var version = 0
             var fileNameMaxVersion = ""
@@ -34,7 +34,7 @@ class UpdateRepositoryImpl : UpdateRepository {
         }
 
     override fun downloadNewQuestions(fileName: String): Single<List<Question>> {
-        return downloadFile(fileName)
+        return fileStorage.downloadFile(fileName)
             .flatMap {
                 parsingData(it)
             }
@@ -54,18 +54,6 @@ class UpdateRepositoryImpl : UpdateRepository {
         return verFileNameInFb > verFileNameInRoom
     }
 
-    private fun downloadFile(fileName: String): Single<String> = Single.create { emitter ->
-        val myRef = rootRef.child(fileName)
-        myRef.getBytes(1024 * 1024)
-            .addOnSuccessListener {
-                val receivedFile = String(it, StandardCharsets.UTF_8)
-                emitter.onSuccess(receivedFile)
-            }
-            .addOnFailureListener {
-                emitter.onError(it)
-            }
-    }
-
     private fun parsingData(data: String): Single<List<Question>> {
         return getNewTestLines(data)
             .skip(NUMBER_QUESTIONS_ITEMS.toLong())
@@ -78,16 +66,6 @@ class UpdateRepositoryImpl : UpdateRepository {
                 )
             }
             .toList()
-    }
-
-    private fun getListAllFiles(): Single<List<StorageReference>> = Single.create { emitter ->
-        rootRef.listAll()
-            .addOnSuccessListener {
-                emitter.onSuccess(it.items)
-            }
-            .addOnFailureListener {
-                emitter.onError(it)
-            }
     }
 
     private fun getNewTestLines(data: String): Observable<String> {
