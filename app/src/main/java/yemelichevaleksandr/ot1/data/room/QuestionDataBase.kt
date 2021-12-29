@@ -6,4 +6,5 @@ import androidx.room.RoomDatabase
 @Database(entities = [QuestionEntity::class, SettingEntity::class], version = 2, exportSchema = false)
 abstract class QuestionDataBase : RoomDatabase() {
     abstract fun questionDao(): QuestionDao
+    abstract fun settingsDao(): SettingsDao
 }

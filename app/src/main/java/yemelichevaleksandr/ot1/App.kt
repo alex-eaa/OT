@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.room.Room
 import yemelichevaleksandr.ot1.data.room.QuestionDao
 import yemelichevaleksandr.ot1.data.room.QuestionDataBase
+import yemelichevaleksandr.ot1.data.room.SettingsDao
 
 
 class App : Application() {
@@ -38,6 +39,24 @@ class App : Application() {
                 }
             }
             return db!!.questionDao()
+        }
+
+        fun getSettingsDao(): SettingsDao {
+            if (db == null) {
+                synchronized(QuestionDataBase::class.java) {
+                    if (db == null) {
+                        if (appInstance == null) throw IllegalStateException("Application is null while creating DataBase")
+                        db = Room.databaseBuilder(
+                            appInstance!!.applicationContext,
+                            QuestionDataBase::class.java,
+                            DB_NAME
+                        )
+//                            .allowMainThreadQueries()
+                            .build()
+                    }
+                }
+            }
+            return db!!.settingsDao()
         }
 
         fun getContext(): Context? = appInstance?.applicationContext
