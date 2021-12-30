@@ -3,11 +3,13 @@ package yemelichevaleksandr.ot1.updater
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import yemelichevaleksandr.ot1.data.Question
-import yemelichevaleksandr.ot1.data.fileStorage.FileStorageFactory
+import yemelichevaleksandr.ot1.data.fileStorage.FileStorage
+import javax.inject.Inject
 
-class UpdateRepositoryImpl : UpdateRepository {
-
-    private val fileStorage = FileStorageFactory.create()
+class UpdateRepositoryImpl
+@Inject constructor(
+    private val fileStorage: FileStorage,
+) : UpdateRepository {
 
     override fun getFilenameWithLatestQuestions(): Single<String> = fileStorage.getListAllFiles()
         .map {

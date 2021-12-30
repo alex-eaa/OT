@@ -1,11 +1,15 @@
 package yemelichevaleksandr.ot1.data
 
+import android.content.Context
 import io.reactivex.rxjava3.core.Observable
-import yemelichevaleksandr.ot1.App
 import yemelichevaleksandr.ot1.R
+import javax.inject.Inject
 
 
 class StringArrayRepositoryImpl : QuestionRepository {
+
+    @Inject
+    lateinit var context: Context
 
     companion object {
         const val NUMBER_QUESTIONS_ITEMS = 7
@@ -31,5 +35,5 @@ class StringArrayRepositoryImpl : QuestionRepository {
     }
 
     private fun getArrayStrings(): ArrayList<String> =
-        App.getContext()?.resources?.getStringArray(R.array.test)?.toList() as ArrayList<String>
+        context.resources?.getStringArray(R.array.test)?.toList() as ArrayList<String>
 }

@@ -3,16 +3,17 @@ package yemelichevaleksandr.ot1.updater
 import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
-import yemelichevaleksandr.ot1.data.QuestionRepositoryFactory
-import yemelichevaleksandr.ot1.data.SettingsRepoFactory
+import yemelichevaleksandr.ot1.data.QuestionRepository
+import yemelichevaleksandr.ot1.data.SettingsRepo
 import yemelichevaleksandr.ot1.data.room.SettingEntity
 import yemelichevaleksandr.ot1.updater.UpdateRepositoryImpl.Companion.PATTERN_VERSION_FILE
+import javax.inject.Inject
 
-class Updater {
-
-    private val model = QuestionRepositoryFactory.create()
-    private val settingsRepo = SettingsRepoFactory.create()
-    private val update = UpdateRepositoryFactory.create()
+class Updater @Inject constructor(
+    private var questionRepo: QuestionRepository,
+    private var settingsRepo: SettingsRepo,
+    private var updateRepo: UpdateRepository,
+) {
 
     fun checkUpdateTime() {
         settingsRepo.getSetting()
@@ -31,7 +32,7 @@ class Updater {
 
     private fun update(fileNameInRoom: String?) {
         var newFileName = ""
-        update.getFilenameWithLatestQuestions()
+        updateRepo.getFilenameWithLatestQuestions()
             .observeOn(Schedulers.io())
             .map { fileNameInFb ->
                 Log.d(TAG, "Новейший файл вопросов в облаке: $fileNameInFb")
@@ -51,11 +52,11 @@ class Updater {
             }
             .flatMap {
                 newFileName = it
-                update.getNewQuestions(it)
+                updateRepo.getNewQuestions(it)
             }
             .observeOn(Schedulers.io())
             .map {
-                val dbRes = model.saveAllQuestions(it)
+                val dbRes = questionRepo.saveAllQuestions(it)
                 if (dbRes) {
                     settingsRepo.saveSetting(SettingEntity(
                         fileName = newFileName,

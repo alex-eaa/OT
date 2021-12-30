@@ -3,14 +3,17 @@ package yemelichevaleksandr.ot1.data
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import yemelichevaleksandr.ot1.App.Companion.getQuestionDao
+import yemelichevaleksandr.ot1.data.room.QuestionDao
 import yemelichevaleksandr.ot1.data.room.entityToQuestion
 import yemelichevaleksandr.ot1.data.room.listQuestionToEntity
+import javax.inject.Inject
 
-class QuestionRepositoryImpl : QuestionRepository {
+class QuestionRepositoryImpl @Inject constructor(
+    private val questionDao: QuestionDao,
+) : QuestionRepository {
 
     override fun getRndQuestions(number: Int): Observable<Question> {
-        return getQuestionDao().getQuestions(number)
+        return questionDao.getQuestions(number)
             .flatMapObservable {
                 Observable.fromIterable(it)
             }
@@ -21,7 +24,7 @@ class QuestionRepositoryImpl : QuestionRepository {
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun saveAllQuestions(list: List<Question>) : Boolean{
-        return getQuestionDao().updateAll(listQuestionToEntity(list))
+    override fun saveAllQuestions(list: List<Question>): Boolean {
+        return questionDao.updateAll(listQuestionToEntity(list))
     }
 }

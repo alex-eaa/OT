@@ -8,10 +8,12 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.subjects.PublishSubject
 import yemelichevaleksandr.ot1.data.Question
-import yemelichevaleksandr.ot1.data.QuestionRepositoryFactory
+import javax.inject.Inject
 
 class TestActivityViewModel : ViewModel() {
-    private val model = QuestionRepositoryFactory.create()
+
+    @Inject
+    lateinit var questions: Observable<Question>
 
     private var numberCorrectAnswers = 0
     private var numberCurrentQuestion = 1
@@ -23,10 +25,9 @@ class TestActivityViewModel : ViewModel() {
     private val _answerState: MutableLiveData<AnswerState> = MutableLiveData()
     val answerState: LiveData<AnswerState> get() = _answerState
 
-    private val questions: Observable<Question> = model.getRndQuestions(NUMBER_QUESTIONS_IN_TEST)
     private val numberQuestionSubject: PublishSubject<Int> = PublishSubject.create()
 
-    private val questionGenerate =
+    fun getFirstQuestion() {
         Observable.zip(questions, numberQuestionSubject, BiFunction { question, number ->
             question.question = "$number. ${question.question}"
             currentQuestion = question
@@ -40,7 +41,6 @@ class TestActivityViewModel : ViewModel() {
                 }
             )
 
-    init {
         numberQuestionSubject.onNext(numberCurrentQuestion)
     }
 

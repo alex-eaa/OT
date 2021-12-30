@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import yemelichevaleksandr.ot1.App
 import yemelichevaleksandr.ot1.R
 import yemelichevaleksandr.ot1.data.Question
 import yemelichevaleksandr.ot1.databinding.SecondactivityBinding
@@ -19,12 +20,14 @@ import yemelichevaleksandr.ot1.viewmodel.TestActivityViewModel.Companion.NUMBER_
 class TestActivity : AppCompatActivity() {
 
     private lateinit var binding: SecondactivityBinding
-    private var alertDialog: AlertDialog? = null
 
     private val viewModel: TestActivityViewModel by lazy {
-        ViewModelProvider(this).get(TestActivityViewModel::class.java)
+        ViewModelProvider(this).get(TestActivityViewModel::class.java).apply {
+            App.instance.component.inject(this)
+        }
     }
 
+    private var alertDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +44,7 @@ class TestActivity : AppCompatActivity() {
         viewModel.question.observe(this, { question ->
             renderQuestion(question)
         })
+        viewModel.getFirstQuestion()
 
         viewModel.answerState.observe(this, { answerState ->
             when (answerState) {
