@@ -17,6 +17,7 @@ import javax.inject.Singleton
         SettingsRepoModule::class,
         UpdateRepositoryModule::class,
         UpdaterModule::class,
+        MapperModule::class,
     ]
 )
 interface ApplicationComponent {
