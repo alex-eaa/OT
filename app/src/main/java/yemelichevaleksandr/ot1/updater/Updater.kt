@@ -88,8 +88,7 @@ class Updater @Inject constructor(
     }
 
     companion object {
-//        const val UPDATE_INTERVAL = 86400000
-        const val UPDATE_INTERVAL = 111
-        const val TAG = "qqq"
+        const val UPDATE_INTERVAL = 43400000
+        const val TAG = "Updater"
     }
 }
