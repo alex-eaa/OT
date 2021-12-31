@@ -19,11 +19,11 @@ class Updater @Inject constructor(
         settingsRepo.getSetting()
             .subscribeOn(Schedulers.io())
             .subscribe({
-                if (System.currentTimeMillis() - it.timeStamp > 86400000)
+                if (System.currentTimeMillis() - it.timeStamp > UPDATE_INTERVAL)
                     update(it.fileName)
                 else
                     Log.d(TAG,
-                        "До следующего обновления осталось: ${(86400000 - (System.currentTimeMillis() - it.timeStamp)) / 60000} минут")
+                        "До следующего обновления осталось: ${(UPDATE_INTERVAL - (System.currentTimeMillis() - it.timeStamp)) / 60000} минут")
             }, {
                 Log.d(TAG, "ERROR database setting: ${it.message.toString()}")
                 update(null)
@@ -88,6 +88,8 @@ class Updater @Inject constructor(
     }
 
     companion object {
+//        const val UPDATE_INTERVAL = 86400000
+        const val UPDATE_INTERVAL = 111
         const val TAG = "qqq"
     }
 }

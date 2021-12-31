@@ -69,6 +69,6 @@ class UpdateRepositoryImpl
         const val PATTERN_QUESTION_BLOCK = "<Row[\\d\\D]+?</Row>"
         const val PATTERN_QUESTION_ITEMS =
             "<Cell ss:StyleID=\".+\"><Data ss:Type=\"(String|Number)\">(.+?)</Data>"
-        const val PATTERN_VERSION_FILE = "questions_v_(\\d+).xml"
+        const val PATTERN_VERSION_FILE = "questions_v_(\\d+).xml.zip"
     }
 }
