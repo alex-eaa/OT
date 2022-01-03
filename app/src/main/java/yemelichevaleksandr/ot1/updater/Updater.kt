@@ -3,10 +3,11 @@ package yemelichevaleksandr.ot1.updater
 import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
+import yemelichevaleksandr.ot1.Const.PATTERN_VERSION_FILE
+import yemelichevaleksandr.ot1.Const.UPDATE_INTERVAL
 import yemelichevaleksandr.ot1.data.QuestionRepository
 import yemelichevaleksandr.ot1.data.SettingsRepo
 import yemelichevaleksandr.ot1.data.room.SettingEntity
-import yemelichevaleksandr.ot1.updater.UpdateRepositoryImpl.Companion.PATTERN_VERSION_FILE
 import javax.inject.Inject
 
 class Updater @Inject constructor(
@@ -88,7 +89,6 @@ class Updater @Inject constructor(
     }
 
     companion object {
-        const val UPDATE_INTERVAL = 43400000
         const val TAG = "Updater"
     }
 }

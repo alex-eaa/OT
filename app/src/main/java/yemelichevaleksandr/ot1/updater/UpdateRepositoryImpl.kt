@@ -2,6 +2,10 @@ package yemelichevaleksandr.ot1.updater
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import yemelichevaleksandr.ot1.Const.NUMBER_QUESTIONS_ITEMS
+import yemelichevaleksandr.ot1.Const.PATTERN_QUESTION_BLOCK
+import yemelichevaleksandr.ot1.Const.PATTERN_QUESTION_ITEMS
+import yemelichevaleksandr.ot1.Const.PATTERN_VERSION_FILE
 import yemelichevaleksandr.ot1.data.Question
 import yemelichevaleksandr.ot1.data.fileStorage.FileStorage
 import javax.inject.Inject
@@ -62,14 +66,5 @@ class UpdateRepositoryImpl
                 }
             emitter.onComplete()
         }
-    }
-
-    companion object {
-        const val NUMBER_QUESTIONS_ITEMS = 9
-        const val PATTERN_QUESTION_BLOCK = "<Row[\\d\\D]+?</Row>"
-        const val PATTERN_QUESTION_ITEMS =
-            "<Cell ss:StyleID=\".+\"><Data ss:Type=\"(String|Number)\">(.+?)</Data>"
-        const val PATTERN_VERSION_FILE = "questions_v_(\\d+).xml.zip$"
-//        const val PATTERN_VERSION_FILE = "questions_v_(\\d+).xml$"
     }
 }
