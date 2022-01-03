@@ -42,13 +42,15 @@ class FirebaseStorageImpl : FileStorage {
             val stream = it.inputStream()
             ZipInputStream(stream).use { zip ->
                 zip.nextEntry?.let { entry ->
+                    Log.d(TAG, "Файл внутри архива: ${entry.name} size = ${entry.size} byte")
                     if (!entry.isDirectory && entry.name.endsWith(".xml")) {
-                        Log.d(TAG, "Файл внутри архива: ${entry.name} size = ${entry.size} byte")
                         emitter.onSuccess(String(zip.readBytes()))
+                    } else {
+                        emitter.onError(Throwable("Файл в архиве не правильный"))
                     }
+
                 }
             }
-            emitter.onError(Throwable("Файл в архиве не правильный"))
         }
             .addOnFailureListener {
                 emitter.onError(it)
