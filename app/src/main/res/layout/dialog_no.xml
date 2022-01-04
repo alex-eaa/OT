@@ -15,54 +15,51 @@
             android:background="?attr/colorPrimary" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:text="@string/no"
-            android:textSize="16sp" />
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:text="@string/you_answer"
+            android:textSize="@dimen/text_size_dialog_item_title" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvNo2"
+            android:id="@+id/tv_you_answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:layout_marginBottom="@dimen/margin_vertical"
             android:textColor="?attr/colorPrimaryDark"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size_dialog_item" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvYes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:text="@string/right"
-            android:textSize="16sp" />
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:text="@string/right_answer"
+            android:textSize="@dimen/text_size_dialog_item_title" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvYes2"
+            android:id="@+id/tv_right_answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:layout_marginBottom="@dimen/margin_vertical"
             android:textColor="?attr/colorSecondary"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size_dialog_item" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvPunkt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:text="@string/rule"
-            android:textSize="16sp" />
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:text="@string/item_rules"
+            android:textSize="@dimen/text_size_dialog_item_title" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvPunkt2"
+            android:id="@+id/tv_item_rules"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
             android:textColor="?attr/colorSecondary"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size_dialog_item" />
 
     </LinearLayout>
 </ScrollView>

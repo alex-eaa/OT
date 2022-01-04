@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,12 +11,13 @@
         android:layout_marginVertical="4dp"
         android:background="?attr/colorPrimaryDark" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvStop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/stop"
-        android:textSize="25sp" />
+        android:text="@string/stop_testing"
+        android:textSize="@dimen/text_size_title"
+        tools:text="@string/stop_testing" />
 
 </LinearLayout>

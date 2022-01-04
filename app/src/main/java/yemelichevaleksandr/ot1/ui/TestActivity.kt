@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -35,11 +34,11 @@ class TestActivity : AppCompatActivity() {
         binding = SecondactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.cardBt1.setOnClickListener { viewModel.checkAnswer(binding.bt1.text.toString()) }
-        binding.cardBt2.setOnClickListener { viewModel.checkAnswer(binding.bt2.text.toString()) }
-        binding.cardBt3.setOnClickListener { viewModel.checkAnswer(binding.bt3.text.toString()) }
-        binding.cardBt4.setOnClickListener { viewModel.checkAnswer(binding.bt4.text.toString()) }
-        binding.cardBt5.setOnClickListener { viewModel.checkAnswer(binding.bt5.text.toString()) }
+        binding.cardAnswer1.setOnClickListener { viewModel.checkAnswer(binding.answer1.text.toString()) }
+        binding.cardAnswer2.setOnClickListener { viewModel.checkAnswer(binding.answer2.text.toString()) }
+        binding.cardAnswer3.setOnClickListener { viewModel.checkAnswer(binding.answer3.text.toString()) }
+        binding.cardAnswer4.setOnClickListener { viewModel.checkAnswer(binding.answer4.text.toString()) }
+        binding.cardAnswer5.setOnClickListener { viewModel.checkAnswer(binding.answer5.text.toString()) }
 
         viewModel.question.observe(this, { question ->
             renderQuestion(question)
@@ -59,15 +58,15 @@ class TestActivity : AppCompatActivity() {
 
     private fun renderQuestion(question: Question) {
         val arrayBtn = arrayListOf(
-            binding.bt1,
-            binding.bt2,
-            binding.bt3,
-            binding.bt4,
-            binding.bt5,
+            binding.answer1,
+            binding.answer2,
+            binding.answer3,
+            binding.answer4,
+            binding.answer5,
         )
         arrayBtn.shuffle()
 
-        binding.tvVopros.text = question.question
+        binding.tvQuestion.text = question.question
         arrayBtn[0].text = question.answersList[0]
         arrayBtn[1].text = question.answersList[1]
         arrayBtn[2].text = question.answersList[2]
@@ -78,9 +77,9 @@ class TestActivity : AppCompatActivity() {
     private fun showDialogYes() {
         alertDialog = AlertDialog.Builder(this)
             .setCancelable(false)
-            .setTitle("ВЕРНО !")
+            .setTitle(this.getString(R.string.result_true))
             .setIcon(R.drawable.ic_baseline_check_circle_outline_24)
-            .setPositiveButton("Дальше") { _, _ ->
+            .setPositiveButton(this.getString(R.string.button_next)) { _, _ ->
                 viewModel.getNextQuestion()
             }
             .show()
@@ -89,16 +88,16 @@ class TestActivity : AppCompatActivity() {
     private fun showDialogNo(question: Question, answer: String) {
         val inflater = this.layoutInflater
         val dialogView = inflater.inflate(R.layout.dialog_no, null)
-        dialogView.findViewById<TextView>(R.id.tvNo2).text = answer
-        dialogView.findViewById<TextView>(R.id.tvYes2).text = question.answersList[0]
-        dialogView.findViewById<TextView>(R.id.tvPunkt2).text = question.info
+        dialogView.findViewById<TextView>(R.id.tv_you_answer).text = answer
+        dialogView.findViewById<TextView>(R.id.tv_right_answer).text = question.answersList[0]
+        dialogView.findViewById<TextView>(R.id.tv_item_rules).text = question.info
 
         alertDialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .setCancelable(false)
-            .setTitle("НЕ верно !")
+            .setTitle(this.getString(R.string.result_false))
             .setIcon(R.drawable.ic_baseline_cancel_24)
-            .setPositiveButton("Дальше") { _, _ ->
+            .setPositiveButton(this.getString(R.string.button_next)) { _, _ ->
                 viewModel.getNextQuestion()
             }
             .create()
@@ -110,25 +109,25 @@ class TestActivity : AppCompatActivity() {
         val inflater = this.layoutInflater
         val dialogView = inflater.inflate(R.layout.dialog_result, null)
 
-        dialogView.findViewById<TextView>(R.id.tvRight).text =
+        dialogView.findViewById<TextView>(R.id.tv_result).text =
             "$numberCorrectAnswers из $NUMBER_QUESTIONS_IN_TEST"
 
-        val tvMark = dialogView.findViewById<TextView>(R.id.tvMark)
+        val tvMark = dialogView.findViewById<TextView>(R.id.tv_rating)
         when {
             numberCorrectAnswers < 14 -> {
-                tvMark.text = "неудовлетворительно"
+                tvMark.text = this.getString(R.string.result_unsatisfactory)
                 tvMark.setTextColor(Color.RED)
             }
             numberCorrectAnswers in 14..15 -> {
-                tvMark.text = "удовлетворительно"
+                tvMark.text = this.getString(R.string.result_satisfactorily)
                 tvMark.setTextColor(Color.MAGENTA)
             }
             numberCorrectAnswers in 16..19 -> {
-                tvMark.text = "хорошо"
+                tvMark.text = this.getString(R.string.result_good)
                 tvMark.setTextColor(Color.BLUE)
             }
             numberCorrectAnswers == 20 -> {
-                tvMark.text = "отлично"
+                tvMark.text = this.getString(R.string.result_perfectly)
                 tvMark.setTextColor(Color.GREEN)
             }
         }
@@ -136,9 +135,9 @@ class TestActivity : AppCompatActivity() {
         alertDialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .setCancelable(false)
-            .setTitle("Результат")
+            .setTitle(this.getString(R.string.result))
             .setIcon(R.drawable.ic_baseline_mail_outline_24)
-            .setPositiveButton("На главную") { _, _ -> finish() }
+            .setPositiveButton(this.getString(R.string.button_home)) { _, _ -> finish() }
             .create()
         alertDialog?.show()
     }
@@ -149,10 +148,10 @@ class TestActivity : AppCompatActivity() {
         alertDialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .setCancelable(false)
-            .setTitle("СТОП !")
+            .setTitle(this.getString(R.string.stop))
             .setIcon(R.drawable.ic_baseline_close_24)
-            .setPositiveButton("ДА") { _, _ -> finish() }
-            .setNegativeButton("НЕТ") { _, _ -> }
+            .setPositiveButton(this.getString(R.string.button_yes)) { _, _ -> finish() }
+            .setNegativeButton(this.getString(R.string.button_no)) { _, _ -> }
             .create()
         alertDialog?.show()
     }

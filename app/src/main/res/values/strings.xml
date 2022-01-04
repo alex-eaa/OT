@@ -1,16 +1,30 @@
 <resources>
 
     <string name="app_name">ОТ1</string>
-    <string name="app_secondname">ЮжКОКС. Охрана труда 1</string>
-    <string name="main">\t Приложение предназначено для подготовки к тестированию по общим вопросам
+    <string name="app_second_name">ЮжКОКС. Охрана труда 1</string>
+    <string name="title">Приложение предназначено для подготовки к тестированию по общим вопросам
         охраны труда рабочих ЧАО «ЮЖКОКС» в тренировочном режиме.</string>
-    <string name="main_discription">Начало</string>
-    <string name="appbar_discription">Заголовок</string>
-    <string name="no">Ваш ответ:</string>
-    <string name="right">Правильный ответ:</string>
-    <string name="stop">Остановить тестирование ?</string>
-    <string name="rule">Пункт правил:</string>
-    <string name="result">Правильных ответов:</string>
-    <string name="mark">Оценка:</string>
+    <string name="main_description">Начало</string>
+    <string name="appbar_description">Заголовок</string>
+    <string name="you_answer">Ваш ответ:</string>
+    <string name="right_answer">Правильный ответ:</string>
+    <string name="stop_testing">Остановить тестирование ?</string>
+    <string name="item_rules">Пункт правил:</string>
+    <string name="correct_answers">Правильных ответов:</string>
+    <string name="rating">Оценка:</string>
+
+    <string name="stop">СТОП!</string>
+    <string name="result">Результат</string>
+    <string name="result_unsatisfactory">неудовлетворительно</string>
+    <string name="result_satisfactorily">удовлетворительно</string>
+    <string name="result_good">хорошо</string>
+    <string name="result_perfectly">отлично</string>
+    <string name="result_true">ВЕРНО!</string>
+    <string name="result_false">НЕ ВЕРНО!</string>
+
+    <string name="button_next">Дальше</string>
+    <string name="button_home">На главную</string>
+    <string name="button_yes">Да</string>
+    <string name="button_no">Нет</string>
 
 </resources>
