@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.subjects.PublishSubject
+import yemelichevaleksandr.ot1.Const.NUMBER_QUESTIONS_IN_TEST
 import yemelichevaleksandr.ot1.data.Question
 import yemelichevaleksandr.ot1.data.QuestionRepository
 import javax.inject.Inject
@@ -69,9 +70,5 @@ class TestActivityViewModel : ViewModel() {
 
     fun onBackStop() {
         _answerState.value = AnswerState.Stop
-    }
-
-    companion object {
-        const val NUMBER_QUESTIONS_IN_TEST = 20
     }
 }
