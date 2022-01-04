@@ -2,7 +2,7 @@ package yemelichevaleksandr.ot1
 
 object Const {
     // The number of random questions in the test
-    const val NUMBER_QUESTIONS_IN_TEST = 2
+    const val NUMBER_QUESTIONS_IN_TEST = 20
 
     //    Update check interval
     const val UPDATE_INTERVAL = 43400000
