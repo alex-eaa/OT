@@ -7,4 +7,5 @@ sealed class AnswerState{
     data class Result(val numberCorrectAnswers: Int) : AnswerState()
     object Yes : AnswerState()
     object Stop : AnswerState()
+    object Empty : AnswerState()
 }

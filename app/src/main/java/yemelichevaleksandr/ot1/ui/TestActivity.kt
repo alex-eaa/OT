@@ -35,11 +35,11 @@ class TestActivity : AppCompatActivity() {
         binding = SecondactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bt1.setOnClickListener { if (it is Button) viewModel.checkAnswer(it.text.toString()) }
-        binding.bt2.setOnClickListener { if (it is Button) viewModel.checkAnswer(it.text.toString()) }
-        binding.bt3.setOnClickListener { if (it is Button) viewModel.checkAnswer(it.text.toString()) }
-        binding.bt4.setOnClickListener { if (it is Button) viewModel.checkAnswer(it.text.toString()) }
-        binding.bt5.setOnClickListener { if (it is Button) viewModel.checkAnswer(it.text.toString()) }
+        binding.cardBt1.setOnClickListener { viewModel.checkAnswer(binding.bt1.text.toString()) }
+        binding.cardBt2.setOnClickListener { viewModel.checkAnswer(binding.bt2.text.toString()) }
+        binding.cardBt3.setOnClickListener { viewModel.checkAnswer(binding.bt3.text.toString()) }
+        binding.cardBt4.setOnClickListener { viewModel.checkAnswer(binding.bt4.text.toString()) }
+        binding.cardBt5.setOnClickListener { viewModel.checkAnswer(binding.bt5.text.toString()) }
 
         viewModel.question.observe(this, { question ->
             renderQuestion(question)
@@ -52,6 +52,7 @@ class TestActivity : AppCompatActivity() {
                 is AnswerState.No -> showDialogNo(answerState.question, answerState.answer)
                 is AnswerState.Result -> showResult(answerState.numberCorrectAnswers)
                 is AnswerState.Stop -> showDialogStop()
+                else -> {}
             }
         })
     }

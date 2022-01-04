@@ -1,80 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/scroll1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:background="#96d796">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_tvVopros"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginBottom="10dp"
-            android:orientation="vertical">
+            android:backgroundTint="?attr/colorPrimary"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="2dp">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvVopros"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorBackGround"
-                android:gravity="center"
-                android:textColor="@color/colorTvVopros"
-                android:textSize="20sp" />
+                android:layout_margin="8dp"
+                android:textSize="20sp"
+                tools:text="asdasdqwe sadasd" />
+        </com.google.android.material.card.MaterialCardView>
 
-            <Button
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_bt1"
+            style="@style/AnswersCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/bt1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorBackGround"
-                android:textColor="@color/colorBt" />
+                android:layout_margin="8dp" />
+        </com.google.android.material.card.MaterialCardView>
 
-            <Button
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_bt2"
+            style="@style/AnswersCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/bt2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorBackGround"
-                android:textColor="@color/colorBt" />
+                android:layout_margin="8dp" />
+        </com.google.android.material.card.MaterialCardView>
 
-            <Button
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_bt3"
+            style="@style/AnswersCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/bt3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorBackGround"
-                android:textColor="@color/colorBt" />
+                android:layout_margin="8dp" />
+        </com.google.android.material.card.MaterialCardView>
 
-            <Button
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_bt4"
+            style="@style/AnswersCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/bt4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorBackGround"
-                android:textColor="@color/colorBt" />
+                android:layout_margin="8dp" />
+        </com.google.android.material.card.MaterialCardView>
 
-            <Button
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_bt5"
+            style="@style/AnswersCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/bt5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorBackGround"
-                android:textColor="@color/colorBt" />
+                android:layout_margin="8dp" />
+        </com.google.android.material.card.MaterialCardView>
 
-        </LinearLayout>
-    </ScrollView>
 
-</RelativeLayout>
+    </LinearLayout>
+</ScrollView>
+

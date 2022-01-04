@@ -54,6 +54,7 @@ class TestActivityViewModel : ViewModel() {
         if (numberCurrentQuestion < NUMBER_QUESTIONS_IN_TEST) {
             numberCurrentQuestion++
             numberQuestionSubject.onNext(numberCurrentQuestion)
+            _answerState.value = AnswerState.Empty
         } else {
             _answerState.value = AnswerState.Result(numberCorrectAnswers)
         }

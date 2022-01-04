@@ -7,9 +7,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        android:background="@android:color/holo_blue_light" />
+        android:layout_marginVertical="4dp"
+        android:background="?attr/colorPrimaryDark" />
 
     <TextView
         android:id="@+id/tvStop"
@@ -17,8 +16,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/stop"
-        android:textColor="@android:color/holo_blue_light"
         android:textSize="25sp" />
-
 
 </LinearLayout>
