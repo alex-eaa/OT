@@ -1,7 +1,9 @@
 package yemelichevaleksandr.ot1.ui
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.view.animation.BounceInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import yemelichevaleksandr.ot1.App
@@ -30,5 +32,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.checkUpdate()
+        animationFab()
+
+    }
+
+    private fun animationFab() {
+        binding.fab.scaleX = 0.5f
+        binding.fab.scaleY = 0.5f
+        binding.fab.animate()
+            .setDuration(1000)
+            .scaleX(1.0f)
+            .scaleY(1.0f)
+            .interpolator = BounceInterpolator()
     }
 }
