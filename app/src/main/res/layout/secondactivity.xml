@@ -37,7 +37,8 @@
                 android:id="@+id/answer1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_in_card" />
+                android:layout_margin="@dimen/margin_in_card"
+                android:textSize="@dimen/text_size_question" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -50,7 +51,8 @@
                 android:id="@+id/answer2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_in_card" />
+                android:layout_margin="@dimen/margin_in_card"
+                android:textSize="@dimen/text_size_question" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -63,7 +65,8 @@
                 android:id="@+id/answer3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_in_card" />
+                android:layout_margin="@dimen/margin_in_card"
+                android:textSize="@dimen/text_size_question" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -76,7 +79,8 @@
                 android:id="@+id/answer4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_in_card" />
+                android:layout_margin="@dimen/margin_in_card"
+                android:textSize="@dimen/text_size_question" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -89,7 +93,8 @@
                 android:id="@+id/answer5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_in_card" />
+                android:layout_margin="@dimen/margin_in_card"
+                android:textSize="@dimen/text_size_question" />
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>

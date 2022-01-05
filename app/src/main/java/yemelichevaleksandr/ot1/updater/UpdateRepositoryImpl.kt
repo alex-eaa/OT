@@ -60,8 +60,8 @@ class UpdateRepositoryImpl
             Regex(PATTERN_QUESTION_BLOCK).findAll(data)
                 .map { Regex(PATTERN_QUESTION_ITEMS).findAll(it.groupValues[0]) }
                 .forEach {
-                    it.forEach {
-                        emitter.onNext(it.groupValues[2])
+                    it.forEach { result ->
+                        emitter.onNext(result.groupValues[2])
                     }
                 }
             emitter.onComplete()

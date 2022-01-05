@@ -10,7 +10,7 @@ class MapperForQuestion {
         questions.mapIndexed { index, it -> map(it, index) }
 
 
-    fun map(question: Question, index: Int): QuestionEntity = QuestionEntity(
+    private fun map(question: Question, index: Int): QuestionEntity = QuestionEntity(
         id = index,
         question = question.question,
         info = question.info,
