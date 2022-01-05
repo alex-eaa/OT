@@ -34,11 +34,11 @@ class TestActivity : AppCompatActivity() {
         binding = SecondactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.cardAnswer1.setOnClickListener { viewModel.checkAnswer(binding.answer1.text.toString()) }
-        binding.cardAnswer2.setOnClickListener { viewModel.checkAnswer(binding.answer2.text.toString()) }
-        binding.cardAnswer3.setOnClickListener { viewModel.checkAnswer(binding.answer3.text.toString()) }
-        binding.cardAnswer4.setOnClickListener { viewModel.checkAnswer(binding.answer4.text.toString()) }
-        binding.cardAnswer5.setOnClickListener { viewModel.checkAnswer(binding.answer5.text.toString()) }
+        binding.answer1.setOnClickListener { viewModel.checkAnswer(binding.answer1.text.toString()) }
+        binding.answer2.setOnClickListener { viewModel.checkAnswer(binding.answer2.text.toString()) }
+        binding.answer3.setOnClickListener { viewModel.checkAnswer(binding.answer3.text.toString()) }
+        binding.answer4.setOnClickListener { viewModel.checkAnswer(binding.answer4.text.toString()) }
+        binding.answer5.setOnClickListener { viewModel.checkAnswer(binding.answer5.text.toString()) }
 
         viewModel.question.observe(this, { question ->
             renderQuestion(question)

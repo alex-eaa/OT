@@ -5,7 +5,7 @@
     <dimen name="text_size_dialog_item_title">16sp</dimen>
     <dimen name="text_size_dialog_item">18sp</dimen>
     <dimen name="text_size_question">20sp</dimen>
-    <dimen name="text_size_answer">8sp</dimen>
+    <dimen name="text_size_answer">16sp</dimen>
     <dimen name="margin_in_card">8dp</dimen>
     <dimen name="text_size_title">26sp</dimen>
 </resources>

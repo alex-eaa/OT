@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,7 +11,6 @@
         android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_tvVopros"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -24,78 +24,40 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:textSize="@dimen/text_size_question" />
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/text_size_question"
+                tools:text="Jndtn" />
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_answer1"
-            style="@style/AnswersCardView"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/answer1"
+            style="@style/AnswersButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/answer1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_in_card"
-                android:textSize="@dimen/text_size_question" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_answer2"
-            style="@style/AnswersCardView"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/answer2"
+            style="@style/AnswersButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/answer2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_in_card"
-                android:textSize="@dimen/text_size_question" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_answer3"
-            style="@style/AnswersCardView"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/answer3"
+            style="@style/AnswersButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/answer3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_in_card"
-                android:textSize="@dimen/text_size_question" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_answer4"
-            style="@style/AnswersCardView"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/answer4"
+            style="@style/AnswersButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/answer4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_in_card"
-                android:textSize="@dimen/text_size_question" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_answer5"
-            style="@style/AnswersCardView"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/answer5"
+            style="@style/AnswersButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/answer5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_in_card"
-                android:textSize="@dimen/text_size_question" />
-        </com.google.android.material.card.MaterialCardView>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </ScrollView>
