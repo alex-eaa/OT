@@ -10,9 +10,10 @@
         <entry key="app/src/main/res/drawable/ic_baseline_mail_outline_24.xml" value="0.34014300306435136" />
         <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.34014300306435136" />
         <entry key="app/src/main/res/drawable/ic_launcher_new_foreground.xml" value="0.34014300306435136" />
+        <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout-large/activity_main.xml" value="0.243359375" />
         <entry key="app/src/main/res/layout-large/secondactivity.xml" value="0.19" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1346153846153846" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_main_end.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main_start.xml" value="0.1" />
         <entry key="app/src/main/res/layout/dialog_no.xml" value="0.33" />
@@ -31,7 +32,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.5" />
+        <option name="scale" value="0.1" />
       </ProjectState>
     </option>
   </component>

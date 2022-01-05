@@ -8,12 +8,7 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="@dimen/fab_margin"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
+            android:visibility="invisible" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -21,21 +16,15 @@
             android:id="@id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="@dimen/fab_margin"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
+            android:visibility="visible" />
     </ConstraintSet>
 
 
-       <Transition
+    <Transition
         app:motionInterpolator="easeInOut"
         motion:autoTransition="animateToEnd"
         motion:constraintSetEnd="@id/end"
         motion:constraintSetStart="@+id/start"
-        motion:duration="800">
-    </Transition>
+        motion:duration="1200" />
 
 </MotionScene>
